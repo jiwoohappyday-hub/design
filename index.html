@@ -1,1295 +1,567 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>디자인 역사 위계도 FINAL</title>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>디자인 역사 위계도 V3.1 (Final Snapshot)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0b0b0c; --bg2:#131315; --bg3:#1a1a1e; --bg4:#1f1f24;
+  --border:rgba(255,255,255,0.06);
+  --border2:rgba(255,255,255,0.11);
+  --text:#dedad2; --muted:#5e5c57; --muted2:#35342f;
+  --c1:#c8a96e; --c2:#c8816e; --c3:#a96ec8;
+  --c4:#6e9ec8; --c5:#c86e8a; --c6:#6ec8a9; --c7:#c8b86e; --c8:#6e7ec8;
 }
-
-:root {
-  --bg: #0b0b0c;
-  --bg2: #131315;
-  --bg3: #1a1a1e;
-  --bg4: #202025;
-
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.14);
-
-  --text: #dedad2;
-  --text2: #b8b3aa;
-  --muted: #7a766d;
-  --muted2: #3a3935;
-
-  --gold: #c8a96e;
-  --red: #c8816e;
-  --violet: #a96ec8;
-  --blue: #6e9ec8;
-  --pink: #c86e8a;
-  --mint: #6ec8a9;
-  --olive: #c8b86e;
-  --indigo: #6e7ec8;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Noto Sans KR", sans-serif;
-  font-weight: 300;
-  display: flex;
-  flex-direction: column;
-}
-
-.bg-glow {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(200,169,110,0.055), transparent 35%),
-    radial-gradient(circle at 80% 70%, rgba(110,158,200,0.05), transparent 35%),
-    linear-gradient(180deg, rgba(255,255,255,0.015), transparent 40%);
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Noto Sans KR',sans-serif; font-weight:300;
+  display:flex; flex-direction:column;
 }
 
 /* TOP */
-.top {
-  height: 72px;
-  flex-shrink: 0;
-  padding: 14px 24px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(11,11,12,0.86);
+.top{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 24px; border-bottom:1px solid var(--border);
+  flex-shrink:0; z-index:50;
+  background: rgba(11, 11, 12, 0.8);
   backdrop-filter: blur(20px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 50;
 }
-
-.top-title {
-  font-family: "DM Serif Display", serif;
-  font-size: 22px;
-  letter-spacing: -0.02em;
-}
-
-.top-sub {
-  margin-top: 3px;
-  font-family: "DM Mono", monospace;
-  font-size: 9px;
-  color: var(--muted);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.top-right {
-  text-align: right;
-  font-family: "DM Mono", monospace;
-  font-size: 10px;
-  color: var(--muted);
-  line-height: 1.6;
-}
+.top-title{font-family:'DM Serif Display',serif;font-size:18px}
+.top-sub{font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+.top-hint{font-size:10px;color:var(--muted); font-family: 'DM Mono', monospace;}
 
 /* CANVAS */
-.canvas {
-  flex: 1;
-  overflow-x: auto;
-  overflow-y: hidden;
+.canvas{flex:1;overflow-x:auto; overflow-y:hidden; display:flex;}
+
+/* GRID: Horizontal Flow */
+.grid{
+  display:flex;
+  align-items:flex-start;
+  min-height:100%;
+  padding-top: 20px;
 }
 
-.grid {
-  min-height: 100%;
-  display: flex;
-  align-items: stretch;
-  padding: 18px 0 0;
+/* ERA SECTION */
+.era-section{
+  flex-shrink:0;
+  display:flex;
+  height: 100%;
+  border-right:1px solid var(--border);
 }
 
-/* COLUMN */
-.era-col {
-  width: 380px;
-  min-width: 380px;
-  max-width: 420px;
-  height: calc(100vh - 72px);
+/* ERA INFO SIDEBAR */
+.era-info-col{
+  width:280px;
+  flex-shrink:0;
+  padding:24px;
+  background:rgba(11, 11, 12, 0.4);
+  backdrop-filter: blur(10px);
+  position: sticky; left:0; z-index:10;
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
 }
-
-.era-col.future {
-  opacity: 0.72;
-  background: repeating-linear-gradient(
-    -45deg,
-    rgba(255,255,255,0.015),
-    rgba(255,255,255,0.015) 8px,
-    rgba(255,255,255,0.005) 8px,
-    rgba(255,255,255,0.005) 16px
-  );
+.era-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:4px}
+.era-name{font-size:20px;font-weight:500;line-height:1.2;margin-bottom:6px}
+.era-period{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:16px}
+.era-bg{
+  font-size:9px;color:var(--muted);
+  display:flex;flex-wrap:wrap;gap:6px;
+  margin-bottom: 24px;
+}
+.era-bg-pill{
+  padding:3px 10px;border-radius:2px;
+  border:1px solid var(--border);
+  background:var(--bg2);
+  white-space:nowrap;
 }
 
-/* HEADER */
-.era-head {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  padding: 20px 20px 18px;
-  background: rgba(11,11,12,0.96);
-  border-bottom: 3px solid;
-}
-
-.era-num {
-  font-family: "DM Mono", monospace;
-  font-size: 10px;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-
-.era-name {
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.25;
-  word-break: keep-all;
-}
-
-.era-period {
-  margin-top: 5px;
-  font-family: "DM Mono", monospace;
-  font-size: 10px;
-  color: var(--muted);
-}
-
-/* BACKGROUND PILLS */
-.bg-set {
-  margin-top: 12px;
-  display: grid;
-  gap: 5px;
-}
-
-.bg-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-}
-
-.bg-key {
-  width: 38px;
-  flex-shrink: 0;
-  font-size: 8px;
-  color: var(--muted);
-  font-family: "DM Mono", monospace;
-  letter-spacing: 0.08em;
-}
-
-.bg-pill {
-  display: inline-block;
-  padding: 3px 8px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--bg2);
-  font-size: 9px;
-  color: var(--text2);
-  line-height: 1.35;
-  word-break: keep-all;
-}
-
-/* WHY CHANGE NEXT */
-.flow-box {
-  padding: 12px 18px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg2);
-  display: grid;
-  gap: 7px;
-}
-
-.flow-item {
-  display: grid;
-  grid-template-columns: 48px 1fr;
-  gap: 8px;
-  align-items: start;
-  font-size: 10px;
-  line-height: 1.55;
-}
-
-.flow-label {
-  font-family: "DM Mono", monospace;
-  color: var(--muted);
-  font-size: 8px;
-  letter-spacing: 0.1em;
-}
-
-.flow-text {
-  color: var(--text2);
-}
-
-/* CONTENT SCROLL */
-.movements-container {
-  flex: 1;
-  overflow-y: auto;
-  padding: 14px 12px 80px;
-}
-
-.movements {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* CARD */
-.mov {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  background: rgba(19,19,21,0.92);
-  transition: border-color 0.18s, transform 0.18s, background 0.18s;
-}
-
-.mov:hover {
-  border-color: var(--border2);
-  background: rgba(26,26,30,0.95);
-  transform: translateY(-1px);
-}
-
-.mov-head {
-  padding: 13px 14px 12px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.mov-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  margin-top: 6px;
-}
-
-.mov-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.mov-topline {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 5px;
-}
-
-.mov-name {
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.35;
-  word-break: keep-all;
-}
-
-.tag {
-  display: inline-flex;
-  align-items: center;
-  height: 16px;
-  padding: 0 6px;
-  border-radius: 999px;
-  font-family: "DM Mono", monospace;
-  font-size: 8px;
-  letter-spacing: 0.04em;
-}
-
-.tag-art {
-  color: var(--pink);
-  background: rgba(200,110,138,0.12);
-  border: 1px solid rgba(200,110,138,0.26);
-}
-
-.tag-select {
-  color: var(--gold);
-  background: rgba(200,169,110,0.10);
-  border: 1px solid rgba(200,169,110,0.24);
-}
-
-/* CASE GRID */
-.case-grid {
-  display: grid;
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.case-row {
-  display: grid;
-  grid-template-columns: 62px 1fr;
-  gap: 8px;
-  align-items: start;
-  font-size: 9.5px;
-  line-height: 1.55;
-}
-
-.case-label {
-  color: var(--muted);
-  font-family: "DM Mono", monospace;
-  font-size: 8px;
-  letter-spacing: 0.08em;
-}
-
-.case-value {
-  color: var(--text2);
-  word-break: keep-all;
-}
-
-/* MODERN */
-.modern {
-  margin-top: 10px;
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid;
-  font-size: 9.5px;
-  line-height: 1.55;
-}
-
-.modern-chain {
-  display: grid;
-  gap: 2px;
-}
-
-.chain-arrow {
-  color: var(--muted);
-  font-family: "DM Mono", monospace;
-}
-
-/* TREE */
-.tree-section {
-  padding: 11px 14px 14px;
-}
-
-.tree-label {
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-family: "DM Mono", monospace;
-  font-size: 8px;
-  color: var(--muted);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.tree-label::before {
-  content: "";
-  display: block;
-  width: 16px;
-  height: 1px;
-  background: var(--muted2);
-}
-
-.trend-row {
-  display: flex;
-  align-items: flex-start;
-  padding: 2px 0;
-}
-
-.trend-line {
-  width: 18px;
-  flex-shrink: 0;
-  position: relative;
-  align-self: stretch;
-}
-
-.trend-line::before {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--muted2);
-}
-
-.trend-line::after {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 10px;
-  width: 8px;
-  height: 1px;
-  background: var(--muted2);
-}
-
-.trend-row:last-child .trend-line::before {
-  height: 10px;
-  bottom: auto;
-}
-
-.trend-body {
-  flex: 1;
-  padding-bottom: 5px;
-}
-
-.trend-name {
-  font-size: 10px;
-  color: var(--text);
-  line-height: 1.45;
-}
-
-.tech-rows {
-  padding-left: 14px;
-  margin-top: 3px;
-}
-
-.tech-row {
-  display: flex;
-  align-items: flex-start;
-  padding: 1px 0;
-}
-
-.tech-line {
-  width: 16px;
-  flex-shrink: 0;
-  position: relative;
-  align-self: stretch;
-}
-
-.tech-line::before {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--muted2);
-  opacity: 0.5;
-}
-
-.tech-line::after {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 8px;
-  width: 7px;
-  height: 1px;
-  background: var(--muted2);
-  opacity: 0.5;
-}
-
-.tech-row:last-child .tech-line::before {
-  height: 8px;
-  bottom: auto;
-}
-
-.tech-name {
-  font-size: 9px;
-  color: var(--muted);
-  line-height: 1.45;
-}
-
-/* FUTURE */
-.future-panel {
-  padding: 16px 18px 80px;
-  overflow-y: auto;
-}
-
-.future-title {
-  font-family: "DM Mono", monospace;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 0.14em;
-  margin-bottom: 14px;
-}
-
-.future-list {
-  display: grid;
-  gap: 10px;
-}
-
-.future-item {
-  border: 1px solid var(--border);
+/* NEXT CONNECTOR */
+.era-next-box{
+  padding:16px;
+  font-size:10px;color:var(--muted);
+  border:1px solid var(--border);
+  background:var(--bg2);
   border-radius: 8px;
-  padding: 12px;
-  background: rgba(19,19,21,0.55);
+  line-height:1.6;
+  display:flex;gap:12px;align-items:flex-start;
+  margin-top: auto;
+}
+.era-next-arrow{flex-shrink:0;font-size:14px}
+
+/* MOVEMENTS HORIZONTAL FLOW */
+.movements-row{
+    display:flex;
+    align-items: flex-start;
+    gap:16px;
+    padding:40px 32px 80px 32px;
 }
 
-.future-item strong {
-  display: block;
-  font-size: 12px;
-  margin-bottom: 4px;
+/* MOVEMENT CARD */
+.mov{
+  flex-shrink: 0;
+  width:320px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--bg2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mov:hover{ border-color: var(--border2); transform: translateY(-4px); }
+
+/* MOV HEADER */
+.mov-head{
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:10px;
+}
+.mov-dot{
+  width:7px;height:7px;border-radius:50%;
+  flex-shrink:0;margin-top:5px;
+}
+.mov-info{flex:1; min-width:0;}
+.mov-name{font-size:12px;font-weight:500;line-height:1.4;margin-bottom:4px; word-break: keep-all;}
+.mov-art-tag{
+  display:inline-block;font-size:8px;
+  padding:1px 5px;border-radius:2px;
+  background:rgba(200,110,138,.12);color:#c86e8a;
+  margin-bottom:5px;
+}
+.mov-cases{font-size:9px;color:var(--muted);line-height:1.6}
+.mov-cases b{color:var(--text);font-weight:400}
+.mov-modern{
+  margin-top:8px;font-size:9px;
+  padding:6px 10px;border-radius:4px;
+  border:1px solid;
+  line-height:1.4;
 }
 
-.future-item span {
-  font-family: "DM Mono", monospace;
-  color: var(--muted);
-  font-size: 9px;
+/* TREE: TRENDS */
+.tree-section{
+  padding:10px 14px 12px 14px;
+}
+.tree-label{
+  font-size:8px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;
+  display:flex;align-items:center;gap:6px;
+}
+.tree-label::before{
+  content:'';display:block;
+  width:14px;height:1px;background:var(--muted2);
 }
 
-.reserved {
-  margin-top: 18px;
-  border-top: 1px solid var(--border);
-  padding-top: 14px;
+/* TREND ROW */
+.trend-row{
+  display:flex;align-items:flex-start;
+  padding:2px 0;
+}
+.trend-line{
+  width:18px;flex-shrink:0;
+  position:relative;
+  align-self:stretch;
+}
+.trend-line::before{
+  content:'';position:absolute;
+  left:7px;top:0;bottom:0;
+  width:1px;background:var(--muted2);
+}
+.trend-row:last-child .trend-line::before,
+.trend-row:last-child .trend-line::after{
+    display: none;
+}
+.trend-line::after{
+  content:'';position:absolute;
+  left:7px;top:10px;
+  width:8px;height:1px;
+  background:var(--muted2);
+}
+.trend-body{flex:1;padding-bottom:4px}
+.trend-name{
+  font-size:10px;color:var(--text);
+  padding:2px 0;line-height:1.4;
 }
 
-.reserved h4 {
-  font-size: 10px;
-  color: var(--muted);
-  font-family: "DM Mono", monospace;
-  letter-spacing: 0.1em;
-  margin-bottom: 10px;
+/* TECH ROWS nested under trend */
+.tech-rows{padding-left:14px; margin-top: 2px;}
+.tech-row{
+  display:flex;align-items:flex-start;gap:0;
+  padding:1px 0;
 }
-
-.reserved-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+.tech-line{
+  width:16px;flex-shrink:0;position:relative;align-self:stretch;
 }
-
-.reserved-tags span {
-  font-size: 9px;
-  color: var(--text2);
-  border: 1px solid var(--border);
-  background: var(--bg2);
-  padding: 4px 8px;
-  border-radius: 999px;
+.tech-line::before{
+  content:'';position:absolute;
+  left:6px;top:0;bottom:0;
+  width:1px;background:var(--muted2);
+  opacity:.5;
+}
+.tech-row:last-child .tech-line::before{
+    height: 8px;
+    bottom: auto;
+}
+.tech-line::after{
+  content:'';position:absolute;
+  left:6px;top:8px;
+  width:7px;height:1px;
+  background:var(--muted2);opacity:.5;
+}
+.tech-name{
+  font-size:9px;color:var(--muted);
+  padding:1px 0;line-height:1.4;
 }
 
 /* SCROLLBAR */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
-::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.02);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border2);
-  border-radius: 99px;
-}
-
-/* SMALL */
-@media (max-width: 768px) {
-  .era-col {
-    width: 330px;
-    min-width: 330px;
-  }
-
-  .top {
-    padding: 12px 16px;
-  }
-
-  .top-title {
-    font-size: 18px;
-  }
-
-  .top-right {
-    display: none;
-  }
+/* BACKGROUND GRADIENT */
+.bg-glow{
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: -1;
+    background: radial-gradient(circle at 20% 30%, rgba(200, 169, 110, 0.03), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(110, 158, 200, 0.03), transparent 40%);
 }
 </style>
 </head>
-
 <body>
+
 <div class="bg-glow"></div>
 
-<header class="top">
+<div class="top">
   <div>
-    <div class="top-title">디자인 역사 위계도 FINAL</div>
-    <div class="top-sub">시대 → 배경 → 사조 → 대표 사례 → 현대 연결 → 트렌드 → 기법</div>
+    <div class="top-title">디자인 역사 위계도 V3.1</div>
+    <div class="top-sub">시대 → 사조 → 트렌드 → 기법 · 전 구간 수평 탐색</div>
   </div>
-  <div class="top-right">
-    HORIZONTAL TIMELINE<br>
-    EDITORIAL GENEALOGY MAP
-  </div>
-</header>
+  <div class="top-hint">← HORIZONTAL TIMELINE AUTO-GEN →</div>
+</div>
 
-<main class="canvas">
-  <section class="grid" id="grid"></section>
-</main>
+<div class="canvas">
+<div class="grid" id="grid"></div>
+</div>
 
 <script>
 const ERAS = [
   {
-    num: "01",
-    name: "선사·자연·생존 시대",
-    period: "기원전 40,000 ~ 3,000",
-    color: "#c8a96e",
-    bg: {
-      tech: "석기·불·직조",
-      society: "부족 공동체·수렵채집",
-      thought: "자연 숭배·주술"
-    },
-    flow: {
-      why: "생존과 의례를 위한 도구·상징 필요",
-      change: "잉여 생산·정착 생활",
-      next: "문명 발생 → 문자·권력 시각화 필요"
-    },
-    movements: [
-      {
-        name: "주술적 상징주의",
-        color: "#c8a96e",
-        person: "—",
-        work: "라스코 동굴벽화 · 알타미라 동굴벽화",
-        brand: "—",
-        modern: "브랜드 상징 체계 · 로고 심볼리즘",
-        trends: [
-          { name: "동물 형상화", techs: ["동굴벽화", "자연 안료"] },
-          { name: "반복 패턴", techs: ["패턴 새기기"] },
-          { name: "부족 상징", techs: ["자연 안료", "뼈 조각"] }
-        ]
-      },
-      {
-        name: "자연 모방 조형",
-        color: "#c8a96e",
-        person: "—",
-        work: "빌렌도르프의 비너스 · 동물형 토우",
-        brand: "—",
-        modern: "바이오미미크리 디자인 · 유기적 형태",
-        trends: [
-          { name: "자연 숭배", techs: ["점토 성형", "뼈 조각"] },
-          { name: "유기적 형태", techs: ["조각", "점토 성형"] }
-        ]
-      },
-      {
-        name: "생존 중심 조형",
-        color: "#c8a96e",
-        person: "—",
-        work: "아슐리안 주먹도끼 · 뼈바늘",
-        brand: "—",
-        modern: "에르고노믹 디자인 · 기능주의",
-        trends: [
-          { name: "기능 중심 형태", techs: ["석기 가공", "뼈 조각"] },
-          { name: "생존 최적화 형태", techs: ["석기 가공", "자연 재료 조합"] }
-        ]
-      }
+    num:'01', name:'선사·자연·생존 시대', period:'기원전 40,000 ~ 3,000', color:'#c8a96e',
+    bg:['석기·불·직조','부족 공동체','자연 숭배·주술'],
+    next:'잉여 생산 → 정착 → 문명 발생 → 문자·권력 시각화 필요',
+    movements:[
+      { name:'주술적 상징주의', color:'#c8a96e',
+        work:'라스코·알타미라 동굴벽화', brand:'',
+        modern:'브랜드 상징 체계 · 로고 심볼리즘',
+        trends:[
+          { name:'동물 형상화', techs:['동굴벽화','자연 안료'] },
+          { name:'반복 패턴',   techs:['패턴 새기기'] },
+          { name:'부족 상징',   techs:['자연 안료','뼈 조각'] },
+          { name:'추상 패턴',   techs:['동굴벽화'] },
+        ]},
+      { name:'자연 모방 조형', color:'#c8a96e',
+        work:'빌렌도르프의 비너스 · 동물형 토우',
+        modern:'바이오미미크리 디자인 · 유기적 형태',
+        trends:[
+          { name:'자연 숭배',   techs:['점토 성형','뼈 조각'] },
+          { name:'유기적 형태', techs:['조각','점토 성형'] },
+        ]},
+      { name:'생존 중심 조형', color:'#c8a96e',
+        work:'아슐리안 주먹도끼 · 뼈바늘',
+        modern:'에르고노믹 디자인 · 기능주의',
+        trends:[
+          { name:'기능 중심 형태',    techs:['석기 가공','뼈 조각'] },
+          { name:'생존 최적화 형태',  techs:['석기 가공','자연 재료 조합'] },
+        ]},
     ]
   },
-
   {
-    num: "02",
-    name: "고대 문명 시대",
-    period: "기원전 3,000 ~ 476",
-    color: "#c8816e",
-    bg: {
-      tech: "금속·문자·건축",
-      society: "국가·왕권·신분제",
-      thought: "신화·신성·권력 시각화"
-    },
-    flow: {
-      why: "왕권·종교·법을 시각적으로 증명할 필요",
-      change: "문자·건축·화폐·인장 발달",
-      next: "로마 붕괴 → 교회 권력 부상 → 종교 중심 시각문화"
-    },
-    movements: [
-      {
-        name: "이집트 양식",
-        color: "#c8816e",
-        person: "임호텝",
-        work: "기자 피라미드 · 투탕카멘 황금 마스크 · 로제타석",
-        brand: "—",
-        modern: "기념비적 브랜딩 · 황금비 활용 레이아웃",
-        trends: [
-          { name: "왕권 시각화", techs: ["상형문자 조각", "벽면 채색"] },
-          { name: "신성성 표현", techs: ["금속 세공", "파피루스 기록"] }
-        ]
-      },
-      {
-        name: "그리스 고전주의",
-        color: "#c8816e",
-        person: "피디아스 · 익티노스",
-        work: "파르테논 신전 · 밀로의 비너스 · 그리스 도기화",
-        brand: "—",
-        modern: "황금비·그리드·비례 시스템 → 현대 타이포그래피",
-        trends: [
-          { name: "황금비", techs: ["비례 설계", "기둥 구조"] },
-          { name: "대칭 구조", techs: ["석조 건축", "건축 축선 설계"] }
-        ]
-      },
-      {
-        name: "헬레니즘",
-        color: "#c8816e",
-        person: "리시포스",
-        work: "사모트라케의 니케 · 라오콘 군상",
-        brand: "—",
-        modern: "Nike 브랜드 네이밍·로고 원형",
-        trends: [
-          { name: "역동적 인체 표현", techs: ["조각", "비례 변형"] }
-        ]
-      },
-      {
-        name: "로마 클래식",
-        color: "#c8816e",
-        person: "비트루비우스",
-        work: "콜로세움 · 트라야누스 기둥 · 판테온",
-        brand: "—",
-        modern: "도시 그리드 설계 · 인프라 디자인",
-        trends: [
-          { name: "도시 질서", techs: ["건축 축선 설계", "석조 건축"] },
-          { name: "권력 기념비", techs: ["부조 조각", "기둥 구조"] }
-        ]
-      }
+    num:'02', name:'고대 문명 시대', period:'기원전 3,000 ~ 476', color:'#c8816e',
+    bg:['금속·문자·건축','국가·왕권·신분제','신화·신성'],
+    next:'로마 붕괴 → 교회 권력 부상 → 종교 중심 시각문화',
+    movements:[
+      { name:'그리스 고전주의', color:'#c8816e',
+        person:'피디아스 · 익티노스', work:'파르테논 신전 · 밀로의 비너스',
+        modern:'황금비·그리드 → 현대 타이포그래피',
+        trends:[
+          { name:'황금비',        techs:['비례 설계','기둥 구조'] },
+          { name:'대칭 구조',     techs:['석조 건축','건축 축선 설계'] },
+          { name:'신성성 표현',   techs:['채색 조각','부조 조각'] },
+        ]},
+      { name:'이집트 양식', color:'#c8816e',
+        person:'임호텝', work:'기자 피라미드 · 투탕카멘 황금 마스크',
+        modern:'기념비적 브랜딩 · 황금비 레이아웃',
+        trends:[
+          { name:'왕권 시각화',   techs:['상형문자 조각','벽면 채색'] },
+          { name:'신성성 표현',   techs:['금속 세공','파피루스 기록'] },
+        ]},
     ]
   },
-
   {
-    num: "03",
-    name: "중세 시대",
-    period: "476 ~ 1400",
-    color: "#a96ec8",
-    bg: {
-      tech: "성당 건축·유리 가공·필사",
-      society: "교회 지배·봉건제·길드",
-      thought: "신 중심 세계관·구원·내세"
-    },
-    flow: {
-      why: "종교 권위와 신성을 시각적으로 전달",
-      change: "성당·필사본·스테인드글라스 발달",
-      next: "흑사병·십자군 → 인간 중심 사유 시작 → 르네상스"
-    },
-    movements: [
-      {
-        name: "비잔틴",
-        color: "#a96ec8",
-        person: "유스티니아누스 황제",
-        work: "하기아 소피아 · 라벤나 모자이크",
-        brand: "—",
-        modern: "금·빛 배경 아이콘 디자인 · 플랫 아이콘 원형",
-        trends: [
-          { name: "성상 중심 표현", techs: ["이콘화", "모자이크"] },
-          { name: "빛의 신성성", techs: ["금박", "채색 유리"] }
-        ]
-      },
-      {
-        name: "고딕",
-        color: "#a96ec8",
-        person: "쉬제르 대수도원장",
-        work: "노트르담 대성당 · 샤르트르 성당 스테인드글라스",
-        brand: "—",
-        modernChain: [
-          "고딕 양식",
-          "19세기 고딕 리바이벌",
-          "럭셔리 모노그램 문화",
-          "루이비통 LV 패턴 · 고딕 서체 부활"
-        ],
-        trends: [
-          { name: "수직성 강조", techs: ["첨탑 구조", "석재 세공"] },
-          { name: "빛의 신성성", techs: ["스테인드글라스", "채색 유리 제작"] }
-        ]
-      },
-      {
-        name: "이슬람 아트",
-        color: "#a96ec8",
-        person: "—",
-        work: "알함브라 궁전 · 아라베스크 타일",
-        brand: "—",
-        modern: "기하학 패턴 · 반복 모듈 디자인",
-        trends: [
-          { name: "기하학 패턴", techs: ["타일 기법", "반복 모듈"] },
-          { name: "장식 문자", techs: ["장식 서체"] }
-        ]
-      }
+    num:'03', name:'중세 시대', period:'476 ~ 1400', color:'#a96ec8',
+    bg:['성당건축·유리','교회·봉건제·길드','신 중심 세계관'],
+    next:'흑사병·십자군 → 인간 중심 사유 시작 → 르네상스',
+    movements:[
+      { name:'고딕', color:'#a96ec8',
+        person:'쉬제르 대수도원장', work:'노트르담 대성당 · 샤르트르 스테인드글라스',
+        modern:'고딕 → 고딕 리바이벌 → 럭셔리 모노그램 → 루이비통',
+        trends:[
+          { name:'수직성 강조',       techs:['첨탑 구조','석재 세공'] },
+          { name:'빛의 신성성',       techs:['스테인드글라스','채색 유리 제작'] },
+        ]},
+      { name:'이슬람 아트', color:'#a96ec8',
+        work:'알함브라 궁전 · 아라베스크 타일',
+        modern:'기합학 패턴 · 반복 모듈 디자인',
+        trends:[
+          { name:'기하학 패턴', techs:['석재 세공','타일 기법'] },
+          { name:'장식 문자',   techs:['장식 서체'] },
+        ]},
     ]
   },
-
   {
-    num: "04",
-    name: "르네상스 시대",
-    period: "1400 ~ 1600",
-    color: "#6e9ec8",
-    bg: {
-      tech: "활판 인쇄·광학·해부학",
-      society: "상인 계급·도시국가·후원",
-      thought: "인문주의·고전 부활·인간 중심"
-    },
-    flow: {
-      why: "인간과 현실 세계를 과학적으로 재현",
-      change: "인쇄술·원근법·해부학 발전",
-      next: "절대왕정 강화 → 권위·감정의 극적 표현 → 바로크"
-    },
-    movements: [
-      {
-        name: "전성기 르네상스",
-        color: "#6e9ec8",
-        person: "레오나르도 다빈치 · 미켈란젤로 · 라파엘로",
-        work: "시스티나 예배당 천장화 · 모나리자 · 비트루비우스 인체도",
-        brand: "—",
-        modern: "황금비 레이아웃 · 인체 비례 기반 타이포그래피",
-        trends: [
-          { name: "인간 중심 표현", techs: ["유화", "해부학 스케치"] },
-          { name: "원근법", techs: ["원근법 드로잉", "공간 구성"] }
-        ]
-      },
-      {
-        name: "르네상스 인문주의",
-        color: "#6e9ec8",
-        person: "에라스무스 · 알두스 마누티우스",
-        work: "알두스 출판사 서적 · 이탤릭체 개발",
-        brand: "알두스 마누티우스 출판사",
-        modern: "편집 디자인 · 타이포그래피 체계",
-        trends: [
-          { name: "문자 시각화", techs: ["활판 인쇄", "이탤릭체 개발"] }
-        ]
-      }
+    num:'04', name:'르네상스 시대', period:'1400 ~ 1600', color:'#6e9ec8',
+    bg:['활판인쇄·광학·해부학','상인계급·도시국가·후원','인문주의·고전 부활'],
+    next:'절대왕정 강화 → 권위·감정의 극적 표현 → 바로크',
+    movements:[
+      { name:'전성기 르네상스', color:'#6e9ec8',
+        person:'다빈치 · 미켈란젤로 · 라파엘로',
+        work:'시스티나 천장화 · 모나리자',
+        modern:'황금비 레이아웃 · 인체 비례 기반 타이포그래피',
+        trends:[
+          { name:'인간 중심 표현',    techs:['유화','해부학 스케치'] },
+          { name:'원근법',            techs:['원근법 드로잉','공간 구성'] },
+        ]},
+      { name:'르네상스 인문주의', color:'#6e9ec8',
+        person:'알두스 마누티우스', brand:'알두스 출판사',
+        modern:'편집 디자인 · 타이포그래피 체계',
+        trends:[
+          { name:'문자 시각화',   techs:['활판 인쇄','이탤릭체 개발'] },
+        ]},
     ]
   },
-
   {
-    num: "05",
-    name: "바로크·로코코·계몽주의",
-    period: "1600 ~ 1780",
-    color: "#c86e8a",
-    bg: {
-      tech: "광학·건축 공학·직물",
-      society: "절대왕정·귀족·시민계급 태동",
-      thought: "권위·감정·이성"
-    },
-    flow: {
-      why: "권력·감정·이성을 시각적으로 설득",
-      change: "시민혁명·산업혁명·상업 자본주의 발달",
-      next: "인쇄 매체 대중화·상업 미술 태동 → 기능 중심 디자인"
-    },
-    movements: [
-      {
-        name: "바로크",
-        color: "#c86e8a",
-        person: "베르니니 · 루벤스 · 카라바조",
-        work: "성 베드로 광장 콜로나데 · 엑스터시의 성 테레사",
-        brand: "—",
-        modern: "극적 조명 연출 · 럭셔리 브랜드 공간 디자인",
-        trends: [
-          { name: "극적 연출", techs: ["천장 프레스코", "조명 연출"] },
-          { name: "빛과 그림자 대비", techs: ["테네브리즘"] }
-        ]
-      },
-      {
-        name: "로코코",
-        color: "#c86e8a",
-        person: "프랑수아 부셰 · 장 오노레 프라고나르",
-        work: "베르사유 거울의 방 · 마이센 도자기",
-        brand: "마이센 · 세브르",
-        modern: "곡선 UI · 파스텔 컬러 팔레트 · 럭셔리 패키지",
-        trends: [
-          { name: "곡선 중심", techs: ["곡선 가공", "금박 장식"] },
-          { name: "귀족 취향", techs: ["장식 가구 제작", "화려한 텍스타일"] }
-        ]
-      }
+    num:'05', name:'바로크·로코코·계몽주의', period:'1600 ~ 1780', color:'#c86e8a',
+    bg:['광학·건축공학·직물','절대왕정·귀족·시민계급 태동','권위·감정·이성'],
+    next:'시민혁명·산업혁명 → 상업 자본주의·인쇄 대중화 → 기능 중심 디자인',
+    movements:[
+      { name:'바로크', color:'#c86e8a',
+        person:'베르니니 · 카라바조', work:'성 베드로 광장',
+        modern:'극적 조명 연출 · 럭셔리 공간 디자인',
+        trends:[
+          { name:'극적 연출',         techs:['천장 프레스코','조명 연출'] },
+          { name:'빛과 그림자 대비',  techs:['테네브리즘'] },
+        ]},
+      { name:'로코코', color:'#c86e8a',
+        brand:'마이센 · 세브르', modern:'곡선 UI · 파스텔 컬러',
+        trends:[
+          { name:'곡선 중심',     techs:['곡선 가공','금박 장식'] },
+        ]},
     ]
   },
-
   {
-    num: "06",
-    name: "산업혁명·근대 디자인",
-    period: "1780 ~ 1945",
-    color: "#6ec8a9",
-    bg: {
-      tech: "증기기관·인쇄·사진·철골",
-      society: "노동자 계급·대중 소비·국민국가",
-      thought: "산업화·기능주의·합리주의"
-    },
-    flow: {
-      why: "대량생산과 상업 매체에 맞는 기능적 조형 필요",
-      change: "기계 생산·사진·포스터·산업디자인 발달",
-      next: "2차 세계대전 종전 → 소비사회·미디어 폭발 → 포스트모던"
-    },
-    movements: [
-      {
-        name: "공예미술운동",
-        color: "#6ec8a9",
-        person: "윌리엄 모리스 · 존 러스킨",
-        work: "모리스 벽지 패턴 · 켐스콧 출판사 서적",
-        brand: "모리스 & Co. · 켐스콧 프레스",
-        modern: "핸드메이드 감성 · 아르티장 브랜딩",
-        trends: [
-          { name: "수공예 회복", techs: ["목판 인쇄", "장식 패턴"] }
-        ]
-      },
-      {
-        name: "아르누보",
-        color: "#6ec8a9",
-        person: "알폰스 무하 · 에크토르 기마르 · 루이 티파니",
-        work: "무하의 지스몽다 포스터 · 파리 메트로 입구",
-        brand: "티파니 & Co.",
-        modern: "유기적 곡선 일러스트 · 뷰티 브랜드 패키지",
-        trends: [
-          { name: "유기적 곡선", techs: ["리소그래피", "자연 상징 패턴"] }
-        ]
-      },
-      {
-        name: "바우하우스",
-        color: "#6ec8a9",
-        person: "발터 그로피우스 · 모호이너지 · 헤르베르트 바이어",
-        work: "바실리 체어 · 바우하우스 타이포그래피 · 데사우 건물",
-        brand: "—",
-        modernChain: [
-          "바우하우스",
-          "브라운 · 디터 람스",
-          "애플 · 조니 아이브",
-          "현대 UI 그리드 시스템 · 무인양품"
-        ],
-        trends: [
-          { name: "기능 중심 디자인", techs: ["그리드 시스템", "표준화 생산"] },
-          { name: "기하학 구조", techs: ["산세리프 타이포", "모듈형 구조"] }
-        ]
-      },
-      {
-        name: "국제주의 스타일",
-        color: "#6ec8a9",
-        person: "요제프 뮐러 브로크만 · 막스 빌 · 아드리안 프루티거",
-        work: "무지카 비바 포스터 · 유니버스 서체",
-        brand: "헬베티카 → 아메리칸 항공·BMW·토요타 CI",
-        modern: "구글·에어비앤비·스포티파이 초기 타이포그래피",
-        trends: [
-          { name: "국제 시각언어", techs: ["객관적 산세리프", "그리드 시스템"] }
-        ]
-      },
-      {
-        name: "다다이즘",
-        color: "#c86e8a",
-        art: true,
-        person: "마르셀 뒤샹 · 한나 회흐 · 쿠르트 슈비터스",
-        work: "샘(변기) · 다다 포토몽타주",
-        brand: "—",
-        modern: "콜라주 그래픽 · 안티 디자인 · 펑크 포스터",
-        trends: [
-          { name: "반예술·콜라주", techs: ["사진 콜라주", "몽타주"] }
-        ]
-      }
+    num:'06', name:'산업혁명·근대 디자인', period:'1780 ~ 1945', color:'#6ec8a9',
+    bg:['증기기관·인쇄·사진·철골','노동자계급·대중소비','산업화·기능주의'],
+    next:'2차 세계대전 종전 → 소비사회·미디어 폭발 → 포스트모던',
+    movements:[
+      { name:'바우하우스', color:'#6ec8a9',
+        person:'그로피우스 · 미스 반 데어 로에', work:'바우하우스 데사우 교사',
+        modern:'바우하우스 → 브라운 → 애플 → UI 그리드',
+        trends:[
+          { name:'기능 중심 디자인', techs:['그리드 시스템','표준화 생산'] },
+          { name:'기하학 패턴',      techs:['산세리프 타이포','모듈형 구조'] },
+        ]},
+      { name:'아르누보', color:'#6ec8a9',
+        person:'알폰스 무하', brand:'티파니 & Co.',
+        modern:'유기적 곡선 일러스트 · 뷰티 패키징',
+        trends:[
+          { name:'곡선 중심',       techs:['리소그래피','자연 상징 패턴'] },
+        ]},
+      { name:'국제주의 스타일', color:'#6ec8a9',
+        brand:'헬베티카 (Helvetica)', modern:'현대 기업 CI 시스템의 표준',
+        trends:[
+          { name:'국제 시각언어', techs:['객관적 산세리프','그리드 시스템'] },
+        ]},
     ]
   },
-
   {
-    num: "07",
-    name: "근대 후기·포스트모던",
-    period: "1945 ~ 1990s",
-    color: "#c8b86e",
-    bg: {
-      tech: "TV·복사기·초기 컴퓨터·비디오",
-      society: "소비사회·대중문화·냉전",
-      thought: "다원주의·해체·반권위"
-    },
-    flow: {
-      why: "모더니즘의 획일성과 권위에 대한 반작용",
-      change: "대중문화·소비사회·초기 디지털 그래픽 확산",
-      next: "인터넷·GUI·네트워크 사회 → 디지털 경험 설계 시대"
-    },
-    movements: [
-      {
-        name: "미드센추리 모던",
-        color: "#c8b86e",
-        person: "찰스 & 레이 임스 · 폴 랜드 · 사울 바스",
-        work: "임스 체어 · IBM 로고 · 영화 타이틀 디자인",
-        brand: "IBM · CBS · UPS",
-        modern: "기업 아이덴티티 시스템 · 모던 가구 디자인",
-        trends: [
-          { name: "브랜드 아이덴티티", techs: ["CI 시스템", "기능적 가구 설계"] }
-        ]
-      },
-      {
-        name: "스위스 스타일",
-        color: "#c8b86e",
-        person: "요제프 뮐러 브로크만 · 아민 호프만 · 막스 미딩어",
-        work: "브로크만 포스터 · 헬베티카 서체",
-        brand: "헬베티카 → 아메리칸 항공·BMW·토요타 CI",
-        modern: "구글·에어비앤비·스포티파이 초기 타이포그래피",
-        trends: [
-          { name: "강한 그리드", techs: ["모듈형 그리드", "산세리프 타이포"] }
-        ]
-      },
-      {
-        name: "팝아트",
-        color: "#c8b86e",
-        person: "앤디 워홀 · 로이 리히텐슈타인",
-        work: "캠벨 수프 캔 · 마릴린 먼로 실크스크린",
-        brand: "앤디 워홀 × 캠벨 수프 콜라보",
-        modern: "슈프림 로고 · 팝 컬러 브랜딩 · 콜라보 문화",
-        trends: [
-          { name: "대중문화 차용", techs: ["실크스크린", "강한 컬러 대비"] }
-        ]
-      },
-      {
-        name: "포스트모더니즘",
-        color: "#c8b86e",
-        person: "데이비드 카슨 · 에이프릴 그레이만 · 볼프강 바인가르트",
-        work: "Ray Gun 매거진 · 해체 타이포그래피",
-        brand: "—",
-        modern: "실험적 웹 디자인 · 반규칙 레이아웃",
-        trends: [
-          { name: "시각 해체", techs: ["타이포 실험", "레이어 중첩"] }
-        ]
-      },
-      {
-        name: "초기 디지털 디자인",
-        color: "#c8b86e",
-        person: "수잔 케어 · 존 워녹",
-        work: "매킨토시 GUI 아이콘 · 어도비 일러스트레이터 v1",
-        brand: "애플 매킨토시 · 어도비 · 앨더스",
-        modern: "현대 GUI · 아이콘 디자인 · DTP 산업 전체",
-        trends: [
-          { name: "인터페이스 초기화", techs: ["초기 GUI 아이콘", "벡터 그래픽"] },
-          { name: "컴퓨터 기반 그래픽", techs: ["DTP 시스템", "PostScript 기술"] }
-        ]
-      },
-      {
-        name: "추상표현주의",
-        color: "#c86e8a",
-        art: true,
-        person: "잭슨 폴록 · 마크 로스코 · 윌렘 데 쿠닝",
-        work: "No.31 · 오렌지와 노랑 · 여인 시리즈",
-        brand: "—",
-        modern: "감성 브랜딩 · 추상 배경 비주얼 · 명상 앱 UI",
-        trends: [
-          { name: "자유로운 붓질", techs: ["비정형 텍스처", "추상 일러스트레이션"] },
-          { name: "무의식적 우연성", techs: ["레이어 블렌딩", "비규칙적 그래픽"] }
-        ]
-      }
+    num:'07', name:'근대 후기·포스트모던', period:'1945 ~ 1990s', color:'#c8b86e',
+    bg:['TV·컴퓨터·비디오','소비사회·대중문화·냉전','다원주의·해체'],
+    next:'인터넷·GUI·네트워크 → 디지털 경험 설계 시대',
+    movements:[
+      { name:'미드센추리 모던', color:'#c8b86e',
+        person:'찰스&레이 임스 · 폴 랜드', brand:'IBM · CBS',
+        modern:'기업 아이덴티티 시스템 · 모던 가구',
+        trends:[
+          { name:'브랜드 아이덴티티', techs:['CI 시스템','기능적 가구설계'] },
+        ]},
+      { name:'팝아트', color:'#c8b86e',
+        person:'앤디 워홀', brand:'캠벨 수프 콜라보',
+        modern:'슈프림 로고 · 팝 컬러 · 콜라보 문화',
+        trends:[
+          { name:'대중문화 차용', techs:['실크스크린','강렬한 컬러대비'] },
+        ]},
+      { name:'추상표현주의ㆍ미술→디자인', color:'#c86e8a', art:true,
+        person:'잭슨 폴록 · 마크 로스코',
+        modern:'감성 브랜딩 · 추상 배경 비주얼 · 명상 앱 UI',
+        trends:[
+          { name:'자유로운 붓질 미학',  techs:['비정형 텍스처 구현','추상 일러스트레이션'] },
+          { name:'무의식적 우연성',     techs:['레이어 블렌딩','비규칙적 그래픽 실험'] },
+          { name:'거대 스케일 스크린',  techs:['풀블리드(Full-bleed) 레이아웃'] },
+        ]},
+      { name:'초기 디지털 디자인', color:'#c8b86e',
+        person:'수잔 케어(애플) · 존 워녹(어도비)',
+        modern:'현대 GUI · DTP 산업 전체의 근원',
+        trends:[
+          { name:'인터페이스 초기화', techs:['초기 GUI 아이콘','벡터 그래픽'] },
+          { name:'컴퓨터 기반 그래픽', techs:['DTP 시스템','PostScript 기술'] },
+        ]},
     ]
   },
-
   {
-    num: "FUTURE",
-    name: "현대 파트 — 예정",
-    period: "1990s ~ 현재",
-    color: "#6e7ec8",
-    future: true,
-    futurePeriods: [
-      { title: "08. 디지털 초기 시대", period: "1990s ~ 2007" },
-      { title: "09. 모바일 플랫폼 시대", period: "2007 ~ 2015" },
-      { title: "10. SNS·알고리즘 시대", period: "2015 ~ 2022" },
-      { title: "11. AI 시대", period: "2022 ~" }
-    ],
-    reserved: [
-      "네오모더니즘",
-      "스큐어모피즘",
-      "플랫 디자인",
-      "머티리얼 디자인",
-      "글래스모피즘",
-      "스페이셜 UI",
-      "미니멀 디지털",
-      "다크모드 미학",
-      "생성형 디자인"
+    num:'08', name:'디지털 초기 시대', period:'1990s ~ 2007', color:'#6e7ec8',
+    bg:['인터넷 보급','GUI 완성','모바일 혁명 직전'],
+    next:'아이폰 출시 → 스마트폰 생태계 → UX/UI 디자인의 시대',
+    movements:[
+      { name:'도트 그래픽 & 픽셀 아트', color:'#6e7ec8',
+        work:'초기 윈도우 아이콘 · 비디오 게임',
+        modern:'뉴트로 미학 · 8비트 감성 디자인',
+        trends:[
+          { name:'저해상도 환경', techs:['픽셀 단위 드로잉','인덱스 컬러'] },
+          { name:'아이콘 메타포', techs:['GUI 아이콘 디자인'] },
+        ]},
+      { name:'웹 1.0 & 테이블 레이아웃', color:'#6e7ec8',
+        work:'야후! · 넷스케이프',
+        modern:'구조적 정보 설계 · 데이터 위계 디자인',
+        trends:[
+          { name:'HTML 기반 구조', techs:['테이블 레이아웃','하이퍼텍스트'] },
+        ]},
+      { name:'스큐어모피즘', color:'#6e7ec8',
+        work:'초기 iOS 엠보싱 버튼',
+        modern:'사실적 인터페이스 · 물리적 메타포 UI',
+        trends:[
+          { name:'질감 모사', techs:['베벨 & 엠보스','드롭 섀도우'] },
+          { name:'물리 도구 재현', techs:['3D 렌더링 아이콘'] },
+        ]},
+      { name:'플래시 & 모션 웹', color:'#6e7ec8',
+        brand:'Adobe Flash',
+        modern:'마이크로 인터랙션 · 풍부한 모먼트 디자인',
+        trends:[
+          { name:'비선형 인터페이스', techs:['액션스크립트','벡터 애니메이션'] },
+        ]},
     ]
-  }
+  },
 ];
 
-const grid = document.getElementById("grid");
+ERAS.forEach(era => {
+  const section = document.createElement('div');
+  section.className = 'era-section';
 
-function makeCaseRow(label, value) {
-  if (!value) return "";
-  return `
-    <div class="case-row">
-      <div class="case-label">${label}</div>
-      <div class="case-value">${value}</div>
-    </div>
-  `;
-}
-
-function makeModern(mov) {
-  if (mov.modernChain && mov.modernChain.length) {
-    return `
-      <div class="modern" style="color:${mov.color};border-color:${mov.color}44">
-        <div class="modern-chain">
-          ${mov.modernChain.map((item, i) => `
-            <div>${i === 0 ? "↗ " : ""}${item}</div>
-            ${i < mov.modernChain.length - 1 ? '<div class="chain-arrow">↓</div>' : ""}
-          `).join("")}
-        </div>
-      </div>
-    `;
-  }
-
-  if (mov.modern) {
-    return `
-      <div class="modern" style="color:${mov.color};border-color:${mov.color}44">
-        ↗ ${mov.modern}
-      </div>
-    `;
-  }
-
-  return "";
-}
-
-function renderFuture(col, era) {
-  const panel = document.createElement("div");
-  panel.className = "future-panel";
-
-  panel.innerHTML = `
-    <div class="future-title">RESERVED DESIGN FLOWS</div>
-
-    <div class="future-list">
-      ${era.futurePeriods.map(item => `
-        <div class="future-item">
-          <strong style="color:${era.color}">${item.title}</strong>
-          <span>${item.period}</span>
-        </div>
-      `).join("")}
-    </div>
-
-    <div class="reserved">
-      <h4>예약 디자인 흐름</h4>
-      <div class="reserved-tags">
-        ${era.reserved.map(item => `<span>${item}</span>`).join("")}
-      </div>
-    </div>
-  `;
-
-  col.appendChild(panel);
-}
-
-function renderEra(era) {
-  const col = document.createElement("section");
-  col.className = era.future ? "era-col future" : "era-col";
-
-  const head = document.createElement("div");
-  head.className = "era-head";
-  head.style.borderColor = era.color;
-
-  head.innerHTML = `
+  // Info Sidebar
+  const info = document.createElement('div');
+  info.className = 'era-info-col';
+  info.style.color = era.color;
+  info.innerHTML = `
     <div class="era-num">${era.num}</div>
-    <div class="era-name" style="color:${era.color}">${era.name}</div>
+    <div class="era-name">${era.name}</div>
     <div class="era-period">${era.period}</div>
-    ${
-      era.bg
-      ? `
-        <div class="bg-set">
-          <div class="bg-row"><span class="bg-key">TECH</span><span class="bg-pill">${era.bg.tech}</span></div>
-          <div class="bg-row"><span class="bg-key">SOC</span><span class="bg-pill">${era.bg.society}</span></div>
-          <div class="bg-row"><span class="bg-key">IDEA</span><span class="bg-pill">${era.bg.thought}</span></div>
-        </div>
-      `
-      : ""
-    }
-  `;
-
-  col.appendChild(head);
-
-  if (era.future) {
-    renderFuture(col, era);
-    return col;
-  }
-
-  const flow = document.createElement("div");
-  flow.className = "flow-box";
-  flow.innerHTML = `
-    <div class="flow-item">
-      <div class="flow-label">WHY</div>
-      <div class="flow-text">${era.flow.why}</div>
-    </div>
-    <div class="flow-item">
-      <div class="flow-label">CHANGE</div>
-      <div class="flow-text">${era.flow.change}</div>
-    </div>
-    <div class="flow-item">
-      <div class="flow-label">NEXT</div>
-      <div class="flow-text">${era.flow.next}</div>
+    <div class="era-bg">${era.bg.map(b=>`<span class="era-bg-pill">${b}</span>`).join('')}</div>
+    <div class="era-next-box" style="border-left: 3px solid ${era.color}">
+      <span class="era-next-arrow">↓</span>
+      <span>${era.next}</span>
     </div>
   `;
-  col.appendChild(flow);
+  section.appendChild(info);
 
-  const movCont = document.createElement("div");
-  movCont.className = "movements-container";
-
-  const movs = document.createElement("div");
-  movs.className = "movements";
+  // Movements Row
+  const movRow = document.createElement('div');
+  movRow.className = 'movements-row';
 
   era.movements.forEach(mov => {
-    const card = document.createElement("article");
-    card.className = "mov";
+    const card = document.createElement('div');
+    card.className = 'mov';
 
-    const mhead = document.createElement("div");
-    mhead.className = "mov-head";
-
+    // Mov header
+    const mhead = document.createElement('div');
+    mhead.className = 'mov-head';
+    let casesHtml = '';
+    if (mov.person) casesHtml += `<b>${mov.person}</b><br>`;
+    if (mov.work)   casesHtml += `<span style="color:var(--muted)">${mov.work}</span><br>`;
+    if (mov.brand)  casesHtml += `<span style="color:var(--muted)">${mov.brand}</span>`;
     mhead.innerHTML = `
       <div class="mov-dot" style="background:${mov.color}"></div>
       <div class="mov-info">
-        <div class="mov-topline">
-          <div class="mov-name" style="color:${mov.color}">${mov.name}</div>
-          ${mov.art ? '<span class="tag tag-art">INFLUENCE</span>' : ""}
-          ${mov.optional ? '<span class="tag tag-select">SELECT</span>' : ""}
-        </div>
-
-        <div class="case-grid">
-          ${makeCaseRow("PERSON", mov.person)}
-          ${makeCaseRow("WORK", mov.work)}
-          ${makeCaseRow("BRAND", mov.brand)}
-        </div>
-
-        ${makeModern(mov)}
+        ${mov.art ? '<span class="mov-art-tag">미술→디자인</span>' : ''}
+        <div class="mov-name" style="color:${mov.color}">${mov.name.replace('ㆍ미술→디자인','')}</div>
+        <div class="mov-cases">${casesHtml}</div>
+        <div class="mov-modern" style="color:${mov.color};border-color:${mov.color}44">↗ ${mov.modern}</div>
       </div>
     `;
-
     card.appendChild(mhead);
 
-    const tree = document.createElement("div");
-    tree.className = "tree-section";
+    // Trends + Techs tree
+    const tree = document.createElement('div');
+    tree.className = 'tree-section';
+    const tlbl = document.createElement('div');
+    tlbl.className = 'tree-label';
+    tlbl.textContent = '트렌드 → 기법';
+    tree.appendChild(tlbl);
 
-    const label = document.createElement("div");
-    label.className = "tree-label";
-    label.textContent = "TREND → TECHNIQUE";
-    tree.appendChild(label);
+    mov.trends.forEach((tr, ti) => {
+      const isLastTrend = ti === mov.trends.length - 1;
 
-    mov.trends.forEach(tr => {
-      const row = document.createElement("div");
-      row.className = "trend-row";
+      const trow = document.createElement('div');
+      trow.className = 'trend-row';
 
-      const line = document.createElement("div");
-      line.className = "trend-line";
+      const tline = document.createElement('div');
+      tline.className = 'trend-line';
+      
+      // 마지막 요소일 때 기둥 선이 아래로 삐져나가지 않도록 인라인 스타일 마스크 주입
+      if (isLastTrend) {
+        tline.innerHTML = `
+          <span style="position:absolute;left:7px;top:0;height:10px;width:1px;background:var(--muted2);display:block"></span>
+          <span style="position:absolute;left:7px;top:10px;width:8px;height:1px;background:var(--muted2);display:block"></span>
+        `;
+      }
+      
+      const tbody = document.createElement('div');
+      tbody.className = 'trend-body';
 
-      const body = document.createElement("div");
-      body.className = "trend-body";
+      const tname = document.createElement('div');
+      tname.className = 'trend-name';
+      tname.textContent = tr.name;
+      tbody.appendChild(tname);
 
-      const name = document.createElement("div");
-      name.className = "trend-name";
-      name.textContent = tr.name;
-      body.appendChild(name);
-
+      // Techs
       if (tr.techs && tr.techs.length) {
-        const techRows = document.createElement("div");
-        techRows.className = "tech-rows";
-
-        tr.techs.forEach(tech => {
-          const techRow = document.createElement("div");
-          techRow.className = "tech-row";
-
-          const techLine = document.createElement("div");
-          techLine.className = "tech-line";
-
-          const techName = document.createElement("div");
-          techName.className = "tech-name";
+        const techRows = document.createElement('div');
+        techRows.className = 'tech-rows';
+        tr.techs.forEach((tech, techI) => {
+          const techRow = document.createElement('div');
+          techRow.className = 'tech-row';
+          const techLine = document.createElement('div');
+          techLine.className = 'tech-line';
+          const techName = document.createElement('div');
+          techName.className = 'tech-name';
           techName.textContent = tech;
-
           techRow.appendChild(techLine);
           techRow.appendChild(techName);
           techRows.appendChild(techRow);
         });
-
-        body.appendChild(techRows);
+        tbody.appendChild(techRows);
       }
 
-      row.appendChild(line);
-      row.appendChild(body);
-      tree.appendChild(row);
+      trow.appendChild(tline);
+      trow.appendChild(tbody);
+      tree.appendChild(trow);
     });
 
     card.appendChild(tree);
-    movs.appendChild(card);
+    movRow.appendChild(card);
   });
 
-  movCont.appendChild(movs);
-  col.appendChild(movCont);
-
-  return col;
-}
-
-ERAS.forEach(era => {
-  grid.appendChild(renderEra(era));
+  section.appendChild(movRow);
+  grid.appendChild(section);
 });
 </script>
 </body>
