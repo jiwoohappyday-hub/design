@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>디자인 역사 위계도 V3.1 (Full Dataset)</title>
+<title>디자인 역사 위계도 V3.1 (Final Snapshot)</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -88,7 +88,7 @@ body{
 }
 .era-next-arrow{flex-shrink:0;font-size:12px}
 
-/* MOVEMENTS SCROLL AREA */
+/* MOVEMENTS SCROLL AREA (Vertical within Col if needed, but here we stack) */
 .movements-container{
     flex: 1;
     overflow-y: auto;
@@ -231,7 +231,7 @@ body{
 
 <div class="top">
   <div>
-    <div class="top-title">디자인 역사 위계도 V3.1 (Merged)</div>
+    <div class="top-title">디자인 역사 위계도 V3.1</div>
     <div class="top-sub">시대 → 사조 → 트렌드 → 기법 · 전 구간 수평 탐색</div>
   </div>
   <div class="top-hint">← HORIZONTAL TIMELINE AUTO-GEN →</div>
@@ -242,619 +242,211 @@ body{
 </div>
 
 <script>
-// ERAS DATA (Merged from constants.ts)
 const ERAS = [
   {
-    num: '01',
-    name: '선사·자연·생존 시대',
-    period: '기원전 40,000 ~ 3,000',
-    color: '#c8a96e',
-    bg: ['석기·불·직조', '부족 공동체', '자연 숭배·주술'],
-    next: '잉여 생산 → 정착 → 문명 발생 → 문자·권력 시각화 필요',
-    movements: [
-      {
-        name: '생존 중심 조형',
-        color: '#c8a96e',
-        work: '아슐리안 주먹도끼 · 뼈바늘',
-        modern: '에르고노믹 디자인 · 기능주의',
-        trends: [
-          { name: '기능 중심 형태', techs: ['석기 가공', '뼈 조각'] },
-          { name: '생존 최적화 형태', techs: ['석기 가공', '자연 재료 조합'] },
-        ],
-      },
-      {
-        name: '자연 모방 조형',
-        color: '#c8a96e',
-        work: '빌렌도르프의 비너스 · 동물형 토우',
-        modern: '바이오미미크리 디자인 · 유기적 형태',
-        trends: [
-          { name: '자연 숭배', techs: ['점토 성형', '뼈 조각'] },
-          { name: '유기적 형태', techs: ['조각', '점토 성형'] },
-        ],
-      },
-      {
-        name: '주술적 상징주의',
-        color: '#c8a96e',
-        work: '라스코 · 알타미라 동굴벽화',
-        modern: '브랜드 상징 체계 · 로고 심볼리즘',
-        trends: [
-          { name: '동물 형상화', techs: ['동굴벽화', '자연 안료'] },
-          { name: '반복 패턴', techs: ['패턴 새기기'] },
-          { name: '부족 상징', techs: ['자연 안료', '뼈 조각'] },
-          { name: '추상 패턴', techs: ['동굴벽화'] },
-        ],
-      },
-      {
-        name: '부족 장식 문화',
-        color: '#c8a96e',
-        work: '채색 토기 · 패총 장신구',
-        modern: '에스닉 패턴 · 부족 문양 패션',
-        trends: [
-          { name: '신체 장식', techs: ['원시 염색', '자연 안료'] },
-          { name: '집단 상징화', techs: ['토기 제작', '직조'] },
-          { name: '의식용 장식', techs: ['토기 제작', '가죽 가공'] },
-        ],
-      },
-      {
-        name: '원시 조형주의',
-        color: '#c8a96e',
-        work: '스톤헨지 · 고인돌',
-        modern: '랜드마크 건축 · 기념비적 조형',
-        trends: [{ name: '집단 상징화', techs: ['석기 가공'] }],
-      },
-      {
-        name: '의례 중심 시각문화',
-        color: '#c8a96e',
-        work: '의례용 토기 · 암각화',
-        modern: '브랜드 의례화 · 패키지 언박싱 경험',
-        trends: [{ name: '의식용 장식', techs: ['토기 제작', '자연 안료'] }],
-      },
-    ],
+    num:'01', name:'선사·자연·생존 시대', period:'기원전 40,000 ~ 3,000', color:'#c8a96e',
+    bg:['석기·불·직조','부족 공동체','자연 숭배·주술'],
+    next:'잉여 생산 → 정착 → 문명 발생 → 문자·권력 시각화 필요',
+    movements:[
+      { name:'주술적 상징주의', color:'#c8a96e',
+        work:'라스코·알타미라 동굴벽화', brand:'',
+        modern:'브랜드 상징 체계 · 로고 심볼리즘',
+        trends:[
+          { name:'동물 형상화', techs:['동굴벽화','자연 안료'] },
+          { name:'반복 패턴',   techs:['패턴 새기기'] },
+          { name:'부족 상징',   techs:['자연 안료','뼈 조각'] },
+          { name:'추상 패턴',   techs:['동굴벽화'] },
+        ]},
+      { name:'자연 모방 조형', color:'#c8a96e',
+        work:'빌렌도르프의 비너스 · 동물형 토우',
+        modern:'바이오미미크리 디자인 · 유기적 형태',
+        trends:[
+          { name:'자연 숭배',   techs:['점토 성형','뼈 조각'] },
+          { name:'유기적 형태', techs:['조각','점토 성형'] },
+        ]},
+      { name:'생존 중심 조형', color:'#c8a96e',
+        work:'아슐리안 주먹도끼 · 뼈바늘',
+        modern:'에르고노믹 디자인 · 기능주의',
+        trends:[
+          { name:'기능 중심 형태',    techs:['석기 가공','뼈 조각'] },
+          { name:'생존 최적화 형태',  techs:['석기 가공','자연 재료 조합'] },
+        ]},
+    ]
   },
   {
-    num: '02',
-    name: '고대 문명 시대',
-    period: '기원전 3,000 ~ 476',
-    color: '#c8816e',
-    bg: ['금속·문자·건축', '국가·왕권·신분제', '신화·신성'],
-    next: '로마 붕괴 → 교회 권력 부상 → 종교 중심 시각문화',
-    movements: [
-      {
-        name: '이집트 양식',
-        color: '#c8816e',
-        person: '임호텝 (건축가)',
-        work: '기자 피라미드 · 투탕카멘 마스크',
-        modern: '기념비적 브랜딩 · 황금비 레이아웃',
-        trends: [
-          { name: '왕권 시각화', techs: ['상형문자 조각', '벽면 채색'] },
-          { name: '신성성 표현', techs: ['금속 세공', '파피루스 기록'] },
-          { name: '기하학 패턴', techs: ['석조 건축', '유약 기법'] },
-        ],
-      },
-      {
-        name: '그리스 고전주의',
-        color: '#c8816e',
-        person: '피디아스 · 익티노스',
-        work: '파르테논 신전 · 밀로의 비너스',
-        modern: '황금비·그리드 → 현대 타이포그래피',
-        trends: [
-          { name: '황금비', techs: ['비례 설계', '기둥 구조'] },
-          { name: '대칭 구조', techs: ['석조 건축', '건축 축선 설계'] },
-          { name: '신성성 표현', techs: ['채색 조각', '부조 조각'] },
-        ],
-      },
-      {
-        name: '헬레니즘',
-        color: '#c8816e',
-        person: '리시포스',
-        work: '사모트라케의 니케 · 라오콘 군상',
-        modern: 'Nike 브랜드 네이밍 · 로고 원형',
-        trends: [{ name: '영웅 서사 표현', techs: ['청동 주조', '채색 조각'] }],
-      },
-      {
-        name: '로마 클래식',
-        color: '#c8816e',
-        person: '비트루비우스 (이론가)',
-        work: '콜로세움 · 판테온',
-        modern: '도시 그리드 설계 · 인프라 디자인',
-        trends: [
-          { name: '권력 상징화', techs: ['건축 축선 설계', '모자이크'] },
-          { name: '화폐 상징화', techs: ['화폐 주조 디자인'] },
-        ],
-      },
-      {
-        name: '메소포타미아 양식',
-        color: '#c8816e',
-        work: '우르의 지구라트 · 함무라비 법전',
-        modern: '정보 위계 시각화 · 법의 타이포그래피',
-        trends: [{ name: '문자 시각화', techs: ['인장 조각', '석조 건축'] }],
-      },
-      {
-        name: '페르시아 양식',
-        color: '#c8816e',
-        work: '페르세폴리스 궁전 · 다리우스 인장',
-        modern: '패턴 텍스타일 · 카펫 디자인',
-        trends: [{ name: '자연 상징 패턴', techs: ['금속 세공', '석조 건축'] }],
-      },
-      {
-        name: '초기 중국 양식',
-        color: '#c8816e',
-        work: '진시황 병마용 · 청동 정(鼎)',
-        modern: '동아시아 브랜딩 · 한자 타이포그래피',
-        trends: [{ name: '권력 인장 문화', techs: ['청동 주조', '인장 조각'] }],
-      },
-      {
-        name: '인도 장식 양식',
-        color: '#c8816e',
-        work: '아쇼카 석주 · 산치 대탑',
-        modern: '만다라 패턴 · 명상 브랜딩',
-        trends: [{ name: '신성성 표현', techs: ['석조 건축', '부조 조각'] }],
-      },
-    ],
+    num:'02', name:'고대 문명 시대', period:'기원전 3,000 ~ 476', color:'#c8816e',
+    bg:['금속·문자·건축','국가·왕권·신분제','신화·신성'],
+    next:'로마 붕괴 → 교회 권력 부상 → 종교 중심 시각문화',
+    movements:[
+      { name:'그리스 고전주의', color:'#c8816e',
+        person:'피디아스 · 익티노스', work:'파르테논 신전 · 밀로의 비너스',
+        modern:'황금비·그리드 → 현대 타이포그래피',
+        trends:[
+          { name:'황금비',        techs:['비례 설계','기둥 구조'] },
+          { name:'대칭 구조',     techs:['석조 건축','건축 축선 설계'] },
+          { name:'신성성 표현',   techs:['채색 조각','부조 조각'] },
+        ]},
+      { name:'이집트 양식', color:'#c8816e',
+        person:'임호텝', work:'기자 피라미드 · 투탕카멘 황금 마스크',
+        modern:'기념비적 브랜딩 · 황금비 레이아웃',
+        trends:[
+          { name:'왕권 시각화',   techs:['상형문자 조각','벽면 채색'] },
+          { name:'신성성 표현',   techs:['금속 세공','파피루스 기록'] },
+        ]},
+    ]
   },
   {
-    num: '03',
-    name: '중세 시대',
-    period: '476 ~ 1400',
-    color: '#a96ec8',
-    bg: ['성당건축·유리·필사', '교회·봉건제·길드', '신 중심 세계관'],
-    next: '흑사병·십자군 → 인간 중심 사유 시작 → 르네상스',
-    movements: [
-      {
-        name: '비잔틴',
-        color: '#a96ec8',
-        person: '유스티니아누스 황제',
-        work: '하기아 소피아 · 라벤나 모자이크',
-        modern: '금·빛 배경 아이콘 · 플랫 아이콘 원형',
-        trends: [
-          { name: '성상 중심 표현', techs: ['모자이크', '이콘화'] },
-          { name: '종교 상징', techs: ['금박', '벽면 프레스코'] },
-        ],
-      },
-      {
-        name: '고딕',
-        color: '#a96ec8',
-        person: '쉬제르 대수도원장',
-        work: '노트르담 대성당 · 샤르트르 스테인드글라스',
-        modern: '루이비통 LV 패턴 · 고딕 서체 부활',
-        trends: [
-          { name: '수직성 강조', techs: ['첨탑 구조', '석재 세공'] },
-          { name: '빛의 신성성', techs: ['스테인드글라스', '채색 유리'] },
-        ],
-      },
-      {
-        name: '이슬람 아트',
-        color: '#a96ec8',
-        work: '알함브라 궁전 · 아라베스크 타일',
-        modern: '기하학 패턴 · 반복 모듈 디자인',
-        trends: [
-          { name: '기하학 패턴', techs: ['타일 기법', '석재 세공'] },
-          { name: '장식 문자', techs: ['장식 서체'] },
-        ],
-      },
-      {
-        name: '켈트 양식',
-        color: '#a96ec8',
-        work: '켈스의 서 · 켈트 십자가',
-        modern: '인터레이스 패턴 · 매듭 일러스트',
-        trends: [{ name: '필사본 장식', techs: ['필사본 채색', '목판 조각'] }],
-      },
-      {
-        name: '로마네스크',
-        color: '#a96ec8',
-        work: '피사 대성당 · 바이외 태피스트리',
-        modern: '아치형 UI 요소 · 스톤 텍스처 브랜딩',
-        trends: [{ name: '종교 상징', techs: ['아치 구조', '태피스트리'] }],
-      },
-      {
-        name: '중세 장인 문화',
-        color: '#a96ec8',
-        work: '길드 문장 · 채색 필사본',
-        modern: '아르티장 브랜딩 · 핸드메이드 감성',
-        trends: [{ name: '문장 디자인', techs: ['수도원 공방', '금박'] }],
-      },
-    ],
+    num:'03', name:'중세 시대', period:'476 ~ 1400', color:'#a96ec8',
+    bg:['성당건축·유리','교회·봉건제·길드','신 중심 세계관'],
+    next:'흑사병·십자군 → 인간 중심 사유 시작 → 르네상스',
+    movements:[
+      { name:'고딕', color:'#a96ec8',
+        person:'쉬제르 대수도원장', work:'노트르담 대성당 · 샤르트르 스테인드글라스',
+        modern:'고딕 → 고딕 리바이벌 → 럭셔리 모노그램 → 루이비통',
+        trends:[
+          { name:'수직성 강조',       techs:['첨탑 구조','석재 세공'] },
+          { name:'빛의 신성성',       techs:['스테인드글라스','채색 유리 제작'] },
+        ]},
+      { name:'이슬람 아트', color:'#a96ec8',
+        work:'알함브라 궁전 · 아라베스크 타일',
+        modern:'기합학 패턴 · 반복 모듈 디자인',
+        trends:[
+          { name:'기하학 패턴', techs:['석재 세공','타일 기법'] },
+          { name:'장식 문자',   techs:['장식 서체'] },
+        ]},
+    ]
   },
   {
-    num: '04',
-    name: '르네상스 시대',
-    period: '1400 ~ 1600',
-    color: '#6e9ec8',
-    bg: ['활판인쇄·광학·해부학', '상인계급·도시국가', '인문주의·고전 부활'],
-    next: '절대왕정 강화 → 권위·감정의 극적 표현 → 바로크',
-    movements: [
-      {
-        name: '전성기 르네상스',
-        color: '#6e9ec8',
-        person: '다빈치 · 미켈란젤로 · 라파엘로',
-        work: '시스티나 천장화 · 모나리자 · 비트루비우스 인체도',
-        modern: '황금비 레이아웃 · 인체 비례 타이포그래피',
-        trends: [
-          { name: '인간 중심 표현', techs: ['유화', '해부학 스케치'] },
-          { name: '원근법', techs: ['원근법 드로잉', '공간 구성'] },
-        ],
-      },
-      {
-        name: '북유럽 르네상스',
-        color: '#6e9ec8',
-        person: '뒤러 · 한스 홀바인',
-        work: '뒤러의 자화상 · 멜랑콜리아 판화',
-        modern: '정밀 일러스트레이션 · 판화 감성 그래픽',
-        trends: [{ name: '사실주의', techs: ['동판 인쇄', '세밀 묘사'] }],
-      },
-      {
-        name: '초기 르네상스',
-        color: '#6e9ec8',
-        person: '브루넬레스키 · 도나텔로',
-        work: '피렌체 대성당 돔 · 다비드상',
-        modern: '원근법 기반 공간 설계 · UI 깊이감',
-        trends: [{ name: '균형과 조화', techs: ['비례 계산', '원형 구도'] }],
-      },
-      {
-        name: '르네상스 인문주의',
-        color: '#6e9ec8',
-        person: '알두스 마누티우스',
-        brand: '알두스 출판사',
-        work: '이탤릭체 개발 · 알두스 서적',
-        modern: '편집 디자인 · 타이포그래피 체계',
-        trends: [{ name: '인문주의', techs: ['활판 인쇄'] }],
-      },
-      {
-        name: '매너리즘',
-        color: '#6e9ec8',
-        person: '엘 그레코 · 폰토르모',
-        work: '긴 목의 마돈나',
-        modern: '과장된 비율 · 실험적 레이아웃',
-        trends: [{ name: '현실 묘사 강화', techs: ['유화'] }],
-      },
-      {
-        name: '르네상스 고전주의',
-        color: '#6e9ec8',
-        person: '알베르티',
-        work: '팔라초 루첼라이',
-        modern: '모듈 그리드 · 비례 기반 UI 설계',
-        trends: [{ name: '비례 중심 디자인', techs: ['비례 계산'] }],
-      },
-    ],
+    num:'04', name:'르네상스 시대', period:'1400 ~ 1600', color:'#6e9ec8',
+    bg:['활판인쇄·광학·해부학','상인계급·도시국가·후원','인문주의·고전 부활'],
+    next:'절대왕정 강화 → 권위·감정의 극적 표현 → 바로크',
+    movements:[
+      { name:'전성기 르네상스', color:'#6e9ec8',
+        person:'다빈치 · 미켈란젤로 · 라파엘로',
+        work:'시스티나 천장화 · 모나리자',
+        modern:'황금비 레이아웃 · 인체 비례 기반 타이포그래피',
+        trends:[
+          { name:'인간 중심 표현',    techs:['유화','해부학 스케치'] },
+          { name:'원근법',            techs:['원근법 드로잉','공간 구성'] },
+        ]},
+      { name:'르네상스 인문주의', color:'#6e9ec8',
+        person:'알두스 마누티우스', brand:'알두스 출판사',
+        modern:'편집 디자인 · 타이포그래피 체계',
+        trends:[
+          { name:'문자 시각화',   techs:['활판 인쇄','이탤릭체 개발'] },
+        ]},
+    ]
   },
   {
-    num: '05',
-    name: '바로크·로코코·계몽주의',
-    period: '1600 ~ 1780',
-    color: '#c86e8a',
-    bg: ['광학·건축 공학·직물', '절대왕정·시민계급 태동', '권위·감정·이성'],
-    next: '산업혁명 → 상업 자본주의·인쇄 매체 대중화 → 기능주의 필요',
-    movements: [
-      {
-        name: '바로크',
-        color: '#c86e8a',
-        person: '베르니니 · 루벤스 · 카라바조',
-        work: '성 베드로 광장 · 성 테레사',
-        modern: '극적 조명 연출 · 럭셔리 공간 디자인',
-        trends: [
-          { name: '극적 연출', techs: ['천장 프레스코', '조명 연출'] },
-          { name: '빛과 그림자 대비', techs: ['회화적 공간 구성'] },
-        ],
-      },
-      {
-        name: '로코코',
-        color: '#c86e8a',
-        brand: '마이센 · 세브르',
-        work: '베르사유 거울의 방 · 마이센 도자기',
-        modern: '곡선 UI · 파스텔 컬러 · 럭셔리 패키지',
-        trends: [
-          { name: '곡선 중심', techs: ['곡선 가공', '장식 가구'] },
-          { name: '화려한 장식', techs: ['금박 장식'] },
-        ],
-      },
-      {
-        name: '신고전주의',
-        color: '#c86e8a',
-        person: '자크 루이 다비드',
-        brand: '웨지우드',
-        work: '호라티우스의 맹세 · 판테온',
-        modern: '고전 타이포그래피 · 국가 기관 CI',
-        trends: [{ name: '권위 시각화', techs: ['왕실 인테리어 설계'] }],
-      },
-      {
-        name: '계몽주의 시각문화',
-        color: '#c86e8a',
-        person: '디드로 · 호가스',
-        work: '백과전서 삽화 · 풍자 판화',
-        modern: '인포그래픽 · 정보 시각화',
-        trends: [{ name: '시민계급 취향 형성', techs: ['귀족 공예 제작'] }],
-      },
-      {
-        name: '절대왕정 시각문화',
-        color: '#c86e8a',
-        person: '루이 14세 · 샤를 르 브룅',
-        work: '베르사유 궁전',
-        modern: '국가 브랜딩 · 권위적 레이아웃',
-        trends: [{ name: '권위 시각화', techs: ['왕실 인테리어 설계'] }],
-      },
-    ],
+    num:'05', name:'바로크·로코코·계몽주의', period:'1600 ~ 1780', color:'#c86e8a',
+    bg:['광학·건축공학·직물','절대왕정·귀족·시민계급 태동','권위·감정·이성'],
+    next:'시민혁명·산업혁명 → 상업 자본주의·인쇄 대중화 → 기능 중심 디자인',
+    movements:[
+      { name:'바로크', color:'#c86e8a',
+        person:'베르니니 · 카라바조', work:'성 베드로 광장',
+        modern:'극적 조명 연출 · 럭셔리 공간 디자인',
+        trends:[
+          { name:'극적 연출',         techs:['천장 프레스코','조명 연출'] },
+          { name:'빛과 그림자 대비',  techs:['테네브리즘'] },
+        ]},
+      { name:'로코코', color:'#c86e8a',
+        brand:'마이센 · 세브르', modern:'곡선 UI · 파스텔 컬러',
+        trends:[
+          { name:'곡선 중심',     techs:['곡선 가공','금박 장식'] },
+        ]},
+    ]
   },
   {
-    num: '06',
-    name: '산업혁명·근대 디자인',
-    period: '1780 ~ 1945',
-    color: '#6ec8a9',
-    bg: ['증기기관·인쇄·사진·철골', '산업화·기능주의', '대중 소비'],
-    next: '2차 대전 종전 → 소비사회·미디어 폭발 → 포스트모던',
-    movements: [
-      {
-        name: '낭만주의',
-        color: '#6ec8a9',
-        person: '들라크루아 · 프리드리히',
-        work: '민중을 이끄는 자유의 여신',
-        modern: '감성 브랜딩 · 자연 이미지 광고',
-        trends: [{ name: '추상 표현', techs: ['유화'] }],
-      },
-      {
-        name: '공예미술운동',
-        color: '#6ec8a9',
-        person: '윌리엄 모리스',
-        brand: '모리스 & Co.',
-        work: '캠스콧 출판사 서적',
-        modern: '핸드메이드 감성 · 아르티장 브랜딩',
-        trends: [{ name: '장식 중심 디자인', techs: ['모듈형 구조'] }],
-      },
-      {
-        name: '아르누보',
-        color: '#6ec8a9',
-        person: '알폰스 무하 · 기마르',
-        brand: '티파니 & Co.',
-        work: '지스몽다 포스터 · 파리 메트로 입구',
-        modern: '유기적 곡선 일러스트 · 뷰티 패키지',
-        trends: [{ name: '곡선 중심', techs: ['리소그래피'] }],
-      },
-      {
-        name: '바우하우스',
-        color: '#6ec8a9',
-        person: '그로피우스 · 칸딘스키 · 바이어',
-        work: '바실리 체어 · 바우하우스 타이포',
-        modern: '브라운(디터 람스) → 애플 → UI 그리드',
-        trends: [
-          { name: '기능 중심 디자인', techs: ['그리드 시스템', '표준화 생산'] },
-          { name: '기하학 패턴', techs: ['산세리프 타이포'] },
-        ],
-      },
-      {
-        name: '아르데코',
-        color: '#6ec8a9',
-        person: '카상드르 · 에르테',
-        brand: '샤넬 No.5 · 까르띠에',
-        work: '크라이슬러 빌딩 · 노르망디 포스터',
-        modern: '럭셔리 패키지 · 기하학 패턴 패션',
-        trends: [
-          { name: '기하학 그래픽', techs: ['산업 렌더링'] },
-          { name: '속도 표현', techs: ['포스터 인쇄'] },
-        ],
-      },
-      {
-        name: '데 스틸',
-        color: '#6ec8a9',
-        person: '몬드리안 · 리트벨트',
-        work: '빨강·파랑·노랑의 구성',
-        modern: '미로 · 몬드리안 패션 · 그리드 UI',
-        trends: [{ name: '기하학 패턴', techs: ['모듈형 구조'] }],
-      },
-      {
-        name: '구성주의',
-        color: '#6ec8a9',
-        person: '로드첸코 · 리시츠키',
-        work: '붉은 쐐기로 백군을 쳐라',
-        modern: '혁명적 그래픽 · 대각선 구성',
-        trends: [
-          { name: '선전 그래픽', techs: ['사진 콜라주'] },
-          { name: '추상 타이포그래피', techs: ['몽타주'] },
-        ],
-      },
-      {
-        name: '국제주의 스타일',
-        color: '#6ec8a9',
-        person: '뮬러 브로크만',
-        brand: '헬베티카',
-        work: '유니버스 서체',
-        modern: '구글 · 에어비앤비 · 스포티파이 타이포',
-        trends: [{ name: '국제 시각언어', techs: ['그리드 시스템'] }],
-      },
-      {
-        name: '다다이즘',
-        color: '#c86e8a',
-        art: true,
-        person: '뒤샹 · 한나 회흐',
-        work: '샘 · 다다 포토몽타주',
-        modern: '콜라주 그래픽 · 안티 디자인',
-        trends: [{ name: '추상 표현', techs: ['사진 콜라주'] }],
-      },
-      {
-        name: '초현실주의',
-        color: '#c86e8a',
-        art: true,
-        person: '달리 · 마그리트',
-        brand: '스키아파렐리 패션',
-        work: '기억의 지속',
-        modern: '광고 초현실 비주얼 · AI 생성 미학',
-        trends: [{ name: '무의식 시각화', techs: ['사진 콜라주'] }],
-      },
-      {
-        name: '큐비즘',
-        color: '#c86e8a',
-        art: true,
-        person: '피카소 · 브라크',
-        work: '아비뇽의 처녀들',
-        modern: '다시점 레이아웃 · 콜라주 타이포',
-        trends: [{ name: '비정형 구성', techs: ['사진 콜라주'] }],
-      },
-      {
-        name: '표현주의',
-        color: '#c86e8a',
-        art: true,
-        person: '뭉크 · 키르히너',
-        work: '절규 · 표현주의 영화 포스터',
-        modern: '감성적 타이포그래피 · 긴장된 비주얼',
-        trends: [{ name: '추상 표현', techs: ['유화'] }],
-      },
-    ],
+    num:'06', name:'산업혁명·근대 디자인', period:'1780 ~ 1945', color:'#6ec8a9',
+    bg:['증기기관·인쇄·사진·철골','노동자계급·대중소비','산업화·기능주의'],
+    next:'2차 세계대전 종전 → 소비사회·미디어 폭발 → 포스트모던',
+    movements:[
+      { name:'바우하우스', color:'#6ec8a9',
+        person:'그로피우스 · 미스 반 데어 로에', work:'바우하우스 데사우 교사',
+        modern:'바우하우스 → 브라운 → 애플 → UI 그리드',
+        trends:[
+          { name:'기능 중심 디자인', techs:['그리드 시스템','표준화 생산'] },
+          { name:'기하학 패턴',      techs:['산세리프 타이포','모듈형 구조'] },
+        ]},
+      { name:'아르누보', color:'#6ec8a9',
+        person:'알폰스 무하', brand:'티파니 & Co.',
+        modern:'유기적 곡선 일러스트 · 뷰티 패키징',
+        trends:[
+          { name:'곡선 중심',       techs:['리소그래피','자연 상징 패턴'] },
+        ]},
+      { name:'국제주의 스타일', color:'#6ec8a9',
+        brand:'헬베티카 (Helvetica)', modern:'현대 기업 CI 시스템의 표준',
+        trends:[
+          { name:'국제 시각언어', techs:['객관적 산세리프','그리드 시스템'] },
+        ]},
+    ]
   },
   {
-    num: '07',
-    name: '근대 후기·포스트모던',
-    period: '1945 ~ 1990s',
-    color: '#c8b86e',
-    bg: ['TV·복사기·컴퓨터', '대중문화·냉전', '다원주의·해체·개인화'],
-    next: '인터넷·GUI·네트워크 사회 등장 → 디지털 경험 설계 시대',
-    movements: [
-      {
-        name: '미드센추리 모던',
-        color: '#c8b86e',
-        person: '찰스 & 레이 임스 · 폴 랜드',
-        brand: 'IBM · CBS · UPS',
-        work: '임스 체어 · IBM 로고',
-        modern: '기업 아이덴티티 시스템 · 모던 가구',
-        trends: [{ name: '브랜드 아이덴티티 강화', techs: ['CI 시스템'] }],
-      },
-      {
-        name: '스위스 스타일',
-        color: '#c8b86e',
-        person: '뮬러 브로크만',
-        brand: '헬베티카',
-        work: '뮬러 브로크만 포스터',
-        modern: '구글 · 에어비앤비 · 스포티파이 타이포',
-        trends: [{ name: '강한 그리드', techs: ['모듈형 그리드'] }],
-      },
-      {
-        name: '팝아트',
-        color: '#c8b86e',
-        person: '앤디 워홀 · 리히텐슈타인',
-        brand: '캠벨 수프 콜라보',
-        work: '마릴린 먼로 실크스크린',
-        modern: '슈프림 로고 · 팝 컬러 · 콜라보 문화',
-        trends: [{ name: '팝 컬러', techs: ['실크스크린'] }],
-      },
-      {
-        name: '포스트모더니즘',
-        color: '#c8b86e',
-        person: '데이비드 카슨',
-        work: 'Ray Gun 매거진',
-        modern: '실험적 웹 디자인 · 반규칙 레이아웃',
-        trends: [{ name: '시각 해체', techs: ['타이포 실험'] }],
-      },
-      {
-        name: '추상표현주의',
-        color: '#c86e8a',
-        art: true,
-        person: '잭슨 폴록 · 마크 로스코',
-        work: 'No.31 · 오렌지와 노랑',
-        modern: '감성 브랜딩 · 추상 배경 비주얼 · 명상 앱 UI',
-        trends: [
-          {
-            name: '자유로운 붓질 미학',
-            techs: ['비정형 텍스처 구현', '추상 일러스트레이션'],
-          },
-          {
-            name: '무의식적 우연성',
-            techs: ['레이어 블렌딩', '비규칙적 그래픽 실험'],
-          },
-          {
-            name: '거대 스케일 스크린',
-            techs: ['풀블리드(Full-bleed) 레이아웃'],
-          },
-        ],
-      },
-      {
-        name: '하이테크 디자인',
-        color: '#c8b86e',
-        person: '렌조 피아노 · 노먼 포스터',
-        work: '퐁피두 센터 · 홍콩 상하이 은행',
-        modern: '테크 기업 오피스 · 구조 노출 인테리어',
-        trends: [{ name: '구조 노출', techs: ['CAD 설계'] }],
-      },
-      {
-        name: '사이키델릭 디자인',
-        color: '#c8b86e',
-        person: '빅터 모스코소',
-        work: '1960s 페스티벌 포스터',
-        modern: '음악 페스티벌 비주얼 · 사이키델릭 패션',
-        trends: [{ name: '네온 컬러', techs: ['오프셋 인쇄'] }],
-      },
-      {
-        name: '개념미술 영향',
-        color: '#c86e8a',
-        art: true,
-        person: '요셉 보이스 · 솔 르윗',
-        work: '사회적 조각 · 월 드로잉',
-        modern: '개념 중심 브랜딩 · 미니멀 카피라이팅',
-        trends: [{ name: '추상 표현', techs: ['즉흥적 레이어링'] }],
-      },
-      {
-        name: '초기 디지털 디자인',
-        color: '#c8b86e',
-        person: '수잔 케어 · 존 워녹',
-        brand: '애플 · 어도비',
-        work: '맥 GUI 아이콘 · 일러스트레이터 v1',
-        modern: '현대 GUI · 아이콘 디자인 · DTP 전체',
-        trends: [
-          { name: '디지털 인터페이스 초기화', techs: ['초기 GUI 디자인'] },
-          {
-            name: '컴퓨터 기반 그래픽',
-            techs: ['DTP 시스템', 'PostScript 기술'],
-          },
-        ],
-      },
-    ],
+    num:'07', name:'근대 후기·포스트모던', period:'1945 ~ 1990s', color:'#c8b86e',
+    bg:['TV·컴퓨터·비디오','소비사회·대중문화·냉전','다원주의·해체'],
+    next:'인터넷·GUI·네트워크 → 디지털 경험 설계 시대',
+    movements:[
+      { name:'미드센추리 모던', color:'#c8b86e',
+        person:'찰스&레이 임스 · 폴 랜드', brand:'IBM · CBS',
+        modern:'기업 아이덴티티 시스템 · 모던 가구',
+        trends:[
+          { name:'브랜드 아이덴티티', techs:['CI 시스템','기능적 가구설계'] },
+        ]},
+      { name:'팝아트', color:'#c8b86e',
+        person:'앤디 워홀', brand:'캠벨 수프 콜라보',
+        modern:'슈프림 로고 · 팝 컬러 · 콜라보 문화',
+        trends:[
+          { name:'대중문화 차용', techs:['실크스크린','강렬한 컬러대비'] },
+        ]},
+      { name:'추상표현주의ㆍ미술→디자인', color:'#c86e8a', art:true,
+        person:'잭슨 폴록 · 마크 로스코',
+        modern:'감성 브랜딩 · 추상 배경 비주얼 · 명상 앱 UI',
+        trends:[
+          { name:'자유로운 붓질 미학',  techs:['비정형 텍스처 구현','추상 일러스트레이션'] },
+          { name:'무의식적 우연성',     techs:['레이어 블렌딩','비규칙적 그래픽 실험'] },
+          { name:'거대 스케일 스크린',  techs:['풀블리드(Full-bleed) 레이아웃'] },
+        ]},
+      { name:'초기 디지털 디자인', color:'#c8b86e',
+        person:'수잔 케어(애플) · 존 워녹(어도비)',
+        modern:'현대 GUI · DTP 산업 전체의 근원',
+        trends:[
+          { name:'인터페이스 초기화', techs:['초기 GUI 아이콘','벡터 그래픽'] },
+          { name:'컴퓨터 기반 그래픽', techs:['DTP 시스템','PostScript 기술'] },
+        ]},
+    ]
   },
   {
-    num: '08',
-    name: '디지털 초기 시대',
-    period: '1990s ~ 2007',
-    color: '#6e7ec8',
-    bg: ['인터넷 보급', 'GUI 완성', '모바일 혁명 직전'],
-    next: '아이폰 출시 → 스마트폰 생태계 → UX/UI 디자인의 시대',
-    movements: [
-      {
-        name: '도트 그래픽 & 픽셀 아트',
-        color: '#6e7ec8',
-        work: '초기 윈도우 아이콘 · 비디오 게임 맵',
-        modern: '뉴트로 미학 · 8비트 감성 디자인',
-        trends: [
-          { name: '저해상도 환경', techs: ['픽셀 단위 드로잉'] },
-          { name: '아이콘 메타포', techs: ['GUI 아이콘 디자인'] },
-        ],
-      },
-      {
-        name: '웹 1.0 & 테이블 레이아웃',
-        color: '#6e7ec8',
-        work: '야후! · 넷스케이프',
-        modern: '구조적 정보 설계 · 데이터 위계 디자인',
-        trends: [
-          { name: 'HTML 기반 구조', techs: ['테이블 레이아웃'] },
-          { name: '텍스트 중심 웹', techs: ['하이퍼텍스트 링크'] },
-        ],
-      },
-      {
-        name: '스큐어모피즘',
-        color: '#6e7ec8',
-        work: '초기 iOS 엠보싱 버튼 · Mac OS 수족관',
-        modern: '사실적 인터페이스 · 물리적 메타포 UI',
-        trends: [
-          { name: '질감 모사', techs: ['베벨 & 엠보스', '드롭 섀도우'] },
-          { name: '물리적 도구 재현', techs: ['3D 렌더링 아이콘'] },
-        ],
-      },
-      {
-        name: '플래시 & 모션 웹',
-        color: '#6e7ec8',
-        brand: 'Macromedia / Adobe Flash',
-        work: '인터랙티브 사이트',
-        modern: '마이크로 인터랙션 · 풍부한 모먼트 디자인',
-        trends: [
-          { name: '비선형 인터페이스', techs: ['액션스크립트'] },
-          { name: '멀티미디어 융합', techs: ['벡터 애니메이션'] },
-        ],
-      },
-    ],
+    num:'08', name:'디지털 초기 시대', period:'1990s ~ 2007', color:'#6e7ec8',
+    bg:['인터넷 보급','GUI 완성','모바일 혁명 직전'],
+    next:'아이폰 출시 → 스마트폰 생태계 → UX/UI 디자인의 시대',
+    movements:[
+      { name:'도트 그래픽 & 픽셀 아트', color:'#6e7ec8',
+        work:'초기 윈도우 아이콘 · 비디오 게임',
+        modern:'뉴트로 미학 · 8비트 감성 디자인',
+        trends:[
+          { name:'저해상도 환경', techs:['픽셀 단위 드로잉','인덱스 컬러'] },
+          { name:'아이콘 메타포', techs:['GUI 아이콘 디자인'] },
+        ]},
+      { name:'웹 1.0 & 테이블 레이아웃', color:'#6e7ec8',
+        work:'야후! · 넷스케이프',
+        modern:'구조적 정보 설계 · 데이터 위계 디자인',
+        trends:[
+          { name:'HTML 기반 구조', techs:['테이블 레이아웃','하이퍼텍스트'] },
+        ]},
+      { name:'스큐어모피즘', color:'#6e7ec8',
+        work:'초기 iOS 엠보싱 버튼',
+        modern:'사실적 인터페이스 · 물리적 메타포 UI',
+        trends:[
+          { name:'질감 모사', techs:['베벨 & 엠보스','드롭 섀도우'] },
+          { name:'물리 도구 재현', techs:['3D 렌더링 아이콘'] },
+        ]},
+      { name:'플래시 & 모션 웹', color:'#6e7ec8',
+        brand:'Adobe Flash',
+        modern:'마이크로 인터랙션 · 풍부한 모먼트 디자인',
+        trends:[
+          { name:'비선형 인터페이스', techs:['액션스크립트','벡터 애니메이션'] },
+        ]},
+    ]
   },
 ];
 
@@ -948,7 +540,7 @@ ERAS.forEach(era => {
       if (tr.techs && tr.techs.length) {
         const techRows = document.createElement('div');
         techRows.className = 'tech-rows';
-        tr.techs.forEach((tech) => {
+        tr.techs.forEach((tech, techI) => {
           const techRow = document.createElement('div');
           techRow.className = 'tech-row';
           const techLine = document.createElement('div');
