@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Design Atlas: Hierarchical & Causal Blueprint</title>
+<title>디자인 역사 : 시대·사조·트렌드·기법 인과 구조도</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -22,7 +22,7 @@ body{
   display:flex; flex-direction:column;
 }
 
-/* TOP */
+/* TOP HEADBAR */
 .top{
   display:flex; align-items:center; justify-content:space-between;
   padding:12px 24px; border-bottom:1px solid var(--border);
@@ -30,9 +30,18 @@ body{
   background: rgba(11, 11, 12, 0.8);
   backdrop-filter: blur(20px);
 }
-.top-title{font-family:'DM Serif Display',serif;font-size:18px}
+.top-title{font-size:16px; font-weight:500; letter-spacing: -0.02em;}
 .top-sub{font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
-.top-hint{font-size:10px;color:var(--muted); font-family: 'DM Mono', monospace;}
+
+/* META LAYER: SELECTION CRITERIA */
+.meta-criteria{
+  display: flex; gap: 16px; align-items: center;
+  background: var(--bg2); border: 1px solid var(--border);
+  padding: 6px 14px; border-radius: 6px;
+}
+.meta-label{font-size: 9px; font-weight: 500; color: var(--muted); letter-spacing: 0.05em;}
+.meta-item{font-size: 10px; color: var(--text); display: flex; align-items: center; gap: 4px;}
+.meta-item span{font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted);}
 
 /* CANVAS */
 .canvas{flex:1;overflow:auto; display:flex;}
@@ -120,6 +129,19 @@ body{
   padding-bottom:18px;
 }
 .mov:hover{ border-color: var(--border2); transform: translateY(-4px); }
+
+/* SYSTEM VISUAL HIERARCHY: FOR FUTURE/UPCOMING CARDS */
+.mov.upcoming{
+  background: transparent;
+  border-color: rgba(255,255,255,0.03);
+}
+.mov.upcoming:hover{ border-color: rgba(255,255,255,0.06); transform: none; }
+.mov.upcoming .mov-modern{
+  color: var(--muted) !important;
+  border-color: rgba(255,255,255,0.03) !important;
+  background: rgba(255,255,255,0.01);
+}
+.mov.upcoming .tech-name{ color: var(--muted2); }
 
 /* MOV HEADER */
 .mov-head{
@@ -242,10 +264,16 @@ body{
 
 <div class="top">
   <div>
-    <div class="top-title">Design Causality Blueprint V4.6</div>
-    <div class="top-sub">시대 → 사조 → 해당 트렌드 → 해당 기법 · 빌드 마스터피스</div>
+    <div class="top-title">디자인 역사 : 시대·사조·트렌드·기법 인과 구조도</div>
+    <div class="top-sub">The Design Atlas — 거시적 인과 관계와 미시적 조형 기법의 시스템 맵핑</div>
   </div>
-  <div class="top-hint">← 가로 스크롤 · 카드 내부 세로 스크롤 →</div>
+  
+  <div class="meta-criteria">
+    <div class="meta-label">대표 사례 선정 기준</div>
+    <div class="meta-item"><span>①</span> 시대 영향력</div>
+    <div class="meta-item"><span>②</span> 디자인 전환점</div>
+    <div class="meta-item"><span>③</span> 현대 연결성</div>
+  </div>
 </div>
 
 <div class="canvas">
@@ -1578,7 +1606,7 @@ const ERAS = [
         "person": "요제프 뮐러 브로크만 · 막스 빌 · 아드리안 프루티거",
         "work": "뮬러 브로크만의 무지카 비바 포스터 · 유니버스 서체",
         "brand": "헬베티카 → 아메리칸 항공·BMW·토요타 CI",
-        "modern": "구글·에어비앤비·스포티파이 초기 타이포그래피",
+        "modern": "구글·에어비앤비·스포티파이 초기 타이포그래요",
         "art": false,
         "trends": [
           {
@@ -1997,7 +2025,7 @@ const ERAS = [
       "데스크톱 GUI 완성",
       "네트워크 사회 태동"
     ],
-    "next": "아이폰 출시 → 스마트폰 생태계 확립 → 모바일 혁명 진입",
+    "next": "아이폰 출시 → 플랫폼 생태계 확립 → 모바일 혁명 진입",
     "movements": [
       {
         "name": "도트 그래픽 & 픽셀 아트",
@@ -2065,7 +2093,7 @@ const ERAS = [
     "num": "09-11",
     "name": "현대 플랫폼 및 AI 시대 (예정)",
     "period": "2007 ~ 현재",
-    "color": "#35342f",
+    "color": "#282724",
     "bg": ["모바일 플랫폼", "SNS·알고리즘", "AI 생성 미학"],
     "next": "생성형 디자인(Generative Design)의 보편화",
     "movements": [
@@ -2074,21 +2102,24 @@ const ERAS = [
         "work": "2007 ~ 2015",
         "modern": "스큐어모피즘 극대화 → 플랫 디자인 대전환",
         "trends": [{ "name": "모바일 UI 표준화", "techs": ["스큐어모피즘", "플랫 디자인", "머티리얼 디자인"] }],
-        "color": "#5e5c57"
+        "color": "#5e5c57",
+        "upcoming": true
       },
       {
         "name": "10. SNS · 알고리즘 시대",
         "work": "2015 ~ 2022",
         "modern": "화면 체류 극대화 미학 · 디자인 시스템 보편화",
         "trends": [{ "name": "피드 중심 미학", "techs": ["글래스모피즘", "다크모드 미학", "Figma 생태계"] }],
-        "color": "#5e5c57"
+        "color": "#5e5c57",
+        "upcoming": true
       },
       {
         "name": "11. AI 시대",
         "work": "2022 ~ 현재",
         "modern": "프롬프트 인터페이스 및 생성형 디자인",
         "trends": [{ "name": "공간 컴퓨팅 및 생성 미학", "techs": ["스페이셜 UI", "생성형 디자인"] }],
-        "color": "#5e5c57"
+        "color": "#5e5c57",
+        "upcoming": true
       }
     ]
   }
@@ -2104,14 +2135,19 @@ ERAS.forEach(era => {
   const info = document.createElement('div');
   info.className = 'era-info-col';
   info.style.color = era.color;
+  
+  // 만약 예정된 파트라면 사이드바 내부 박스 스타일도 투명화 제어
+  const isUpcomingEra = era.num === "09-11";
+  const borderStyle = isUpcomingEra ? `dashed 1px rgba(255,255,255,0.05)` : `solid 3px ${era.color}`;
+
   info.innerHTML = `
     <div class="era-num">${era.num}</div>
-    <div class="era-name">${era.name}</div>
+    <div class="era-name" style="${isUpcomingEra ? 'color:var(--muted)' : ''}">${era.name}</div>
     <div class="era-period">${era.period}</div>
     <div class="era-bg">${era.bg.map(b=>`<span class="era-bg-pill">${b}</span>`).join('')}</div>
-    <div class="era-next-box" style="border-left: 3px solid ${era.color}">
-      <span class="era-next-arrow">↓</span>
-      <span>${era.next}</span>
+    <div class="era-next-box" style="border: none; border-left: ${borderStyle}; background: ${isUpcomingEra ? 'transparent' : 'var(--bg2)'}">
+      <span class="era-next-arrow" style="${isUpcomingEra ? 'color:var(--muted2)' : ''}">↓</span>
+      <span style="${isUpcomingEra ? 'color:var(--muted)' : ''}">${era.next}</span>
     </div>
   `;
   section.appendChild(info);
@@ -2122,7 +2158,8 @@ ERAS.forEach(era => {
 
   era.movements.forEach(mov => {
     const card = document.createElement('div');
-    card.className = 'mov';
+    // upcoming 플래그가 있으면 상위 위계 제어용 CSS 클래스 부여
+    card.className = mov.upcoming ? 'mov upcoming' : 'mov';
 
     // Mov header
     const mhead = document.createElement('div');
@@ -2132,12 +2169,12 @@ ERAS.forEach(era => {
     if (mov.work)   casesHtml += `<span style="color:var(--muted)">${mov.work}</span><br>`;
     if (mov.brand)  casesHtml += `<span style="color:var(--muted)">${mov.brand}</span>`;
     mhead.innerHTML = `
-      <div class="mov-dot" style="background:${mov.color}"></div>
+      <div class="mov-dot" style="background:${mov.upcoming ? 'var(--muted2)' : mov.color}"></div>
       <div class="mov-info">
         ${mov.art ? '<span class="mov-art-tag">미술→디자인</span>' : ''}
-        <div class="mov-name" style="color:${mov.color}">${mov.name.replace('ㆍ미술→디자인','')}</div>
+        <div class="mov-name" style="color:${mov.upcoming ? 'var(--muted)' : mov.color}">${mov.name.replace('ㆍ미술→디자인','')}</div>
         <div class="mov-cases">${casesHtml}</div>
-        <div class="mov-modern" style="color:${mov.color};border-color:${mov.color}44">↗ ${mov.modern}</div>
+        <div class="mov-modern" style="color:${mov.upcoming ? 'var(--muted2)' : mov.color}; border-color:${mov.upcoming ? 'rgba(255,255,255,0.02)' : mov.color + '44'}">↗ ${mov.modern}</div>
       </div>
     `;
     card.appendChild(mhead);
@@ -2147,7 +2184,7 @@ ERAS.forEach(era => {
     tree.className = 'tree-section';
     const tlbl = document.createElement('div');
     tlbl.className = 'tree-label';
-    tlbl.textContent = '해당 트렌드 → 해당 기법';
+    tlbl.textContent = mov.upcoming ? '미래 예약 라인' : '해당 트렌드 → 해당 기법';
     tree.appendChild(tlbl);
 
     mov.trends.forEach((tr, ti) => {
@@ -2173,6 +2210,7 @@ ERAS.forEach(era => {
       const tname = document.createElement('div');
       tname.className = 'trend-name';
       tname.textContent = tr.name;
+      tname.style.color = mov.upcoming ? 'var(--muted)' : 'var(--text)';
       tbody.appendChild(tname);
 
       // Techs
