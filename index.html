@@ -249,6 +249,64 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
   color:inherit;
 }
 
+
+/* WORK DETAIL */
+.work-detail{
+  margin-top:10px;
+  padding:14px;
+  border-radius:8px;
+  border:1px solid var(--border2);
+  background:rgba(255,255,255,0.025);
+}
+.work-detail-kicker{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.work-detail-title{
+  font-size:14px;
+  font-weight:500;
+  color:var(--text);
+  margin-bottom:8px;
+  line-height:1.45;
+}
+.work-detail-text{
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.7;
+  word-break:keep-all;
+}
+.work-detail-links{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:12px;
+}
+.work-detail-link{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px;
+  border-radius:6px;
+  border:1px solid var(--border);
+  background:var(--bg2);
+  text-decoration:none;
+  color:var(--text);
+  font-size:10px;
+}
+.work-detail-link:hover{
+  border-color:var(--border2);
+  background:var(--bg4);
+}
+.work-detail-link span{
+  color:var(--muted);
+  font-size:9px;
+}
+
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
@@ -296,9 +354,9 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
     <!-- 대표 이미지 -->
     <div class="ps">
-      <div class="ps-title"><span class="ps-title-icon">🖼</span> 대표 이미지 자료 — 클릭하면 관련 사이트로 이동</div>
+      <div class="ps-title"><span class="ps-title-icon">🖼</span> 대표 이미지 자료 — 클릭하면 관련 이미지 검색으로 이동</div>
       <div class="img-grid" id="panelImgs"></div>
-      <div class="img-notice">* 외부 이미지 API가 차단되어도 깨지지 않도록, 대표 이미지는 검색 프리뷰 카드로 표시돼요. 클릭하면 Google Arts & Culture 자료로 이동합니다.</div>
+      <div class="img-notice">* 외부 이미지 API가 차단되어도 깨지지 않도록, 대표 이미지는 검색 프리뷰 카드로 표시돼요. 클릭하면 Google 이미지/검색 자료로 이동합니다.</div>
     </div>
 
     <!-- 외부 링크 -->
@@ -309,8 +367,9 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
     <!-- 대표 작품 목록 -->
     <div class="ps">
-      <div class="ps-title"><span class="ps-title-icon">📋</span> 대표 작품 · 브랜드 — 클릭하면 관련 자료로 이동</div>
+      <div class="ps-title"><span class="ps-title-icon">📋</span> 대표 작품 · 브랜드 — 누르면 작품 소개가 열림</div>
       <div class="work-list" id="panelWorks"></div>
+      <div id="workDetail"></div>
     </div>
 
   </div>
@@ -725,6 +784,55 @@ function openExternal(url) {
   }
 }
 
+
+function cleanQueryText(text) {
+  return String(text || '')
+    .replace(/["“”]/g, '')
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/→/g, ' ')
+    .replace(/·/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function buildSearchUrl(label, movName, type) {
+  const base = cleanQueryText(label + ' ' + movName);
+  if (type === 'wiki') {
+    return `https://ko.wikipedia.org/w/index.php?search=${encodeURIComponent(base)}`;
+  }
+  if (type === 'images') {
+    return `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(base)}`;
+  }
+  return `https://www.google.com/search?q=${encodeURIComponent(base + ' 작품 소개 디자인 역사')}`;
+}
+
+function renderWorkDetail(label, mov, type) {
+  const box = document.getElementById('workDetail');
+  if (!box) return;
+
+  const isBrand = type === 'brand';
+  const searchMain = buildSearchUrl(label, mov.name, 'main');
+  const searchImages = buildSearchUrl(label, mov.name, 'images');
+  const searchWiki = buildSearchUrl(label, mov.name, 'wiki');
+
+  box.innerHTML = `
+    <div class="work-detail" style="border-left:3px solid ${mov.color}">
+      <div class="work-detail-kicker">${isBrand ? '대표 브랜드 소개' : '대표 작품 소개'}</div>
+      <div class="work-detail-title">${label}</div>
+      <div class="work-detail-text">
+        이 항목은 <b style="color:var(--text);font-weight:400">${mov.name}</b>을 설명하는 대표 사례야.
+        이 사조의 핵심 흐름은 <b style="color:var(--text);font-weight:400">${mov.modern || '현대 디자인 흐름'}</b>로 이어져.
+        아래 버튼에서 이미지, 작품 설명, 관련 자료를 바로 확인할 수 있어.
+      </div>
+      <div class="work-detail-links">
+        <a class="work-detail-link" href="${searchImages}" target="_blank" rel="noopener noreferrer">이미지 보기 <span>Google Images ↗</span></a>
+        <a class="work-detail-link" href="${searchWiki}" target="_blank" rel="noopener noreferrer">작품/인물 설명 보기 <span>Wikipedia 검색 ↗</span></a>
+        <a class="work-detail-link" href="${searchMain}" target="_blank" rel="noopener noreferrer">관련 자료 더 보기 <span>Google 검색 ↗</span></a>
+      </div>
+    </div>
+  `;
+}
+
 // ── PANEL ──────────────────────────────────────────────
 let activeCard = null;
 
@@ -757,7 +865,7 @@ function openPanel(mov, era) {
   const imgGrid = document.getElementById('panelImgs');
   imgGrid.innerHTML = '';
   (mov.imgs || []).forEach(img => {
-    const url = `https://artsandculture.google.com/search?q=${encodeURIComponent(img.q || img.label)}`;
+    const url = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent((img.q || img.label) + ' ' + mov.name)}`;
     const a = document.createElement('a');
     a.className = 'img-item';
     a.href = url;
@@ -772,9 +880,9 @@ function openPanel(mov, era) {
       <div class="img-preview" style="border-left:3px solid ${mov.color}">
         <div class="img-preview-kicker">대표 이미지 검색</div>
         <div class="img-preview-title">${img.label}</div>
-        <div class="img-preview-action">Google Arts & Culture에서 보기 ↗</div>
+        <div class="img-preview-action">이미지 검색에서 보기 ↗</div>
       </div>
-      <div class="img-item-label">${img.label} · 고화질 자료로 이동 ↗</div>
+      <div class="img-item-label">${img.label} · 관련 이미지 자료로 이동 ↗</div>
     `;
     imgGrid.appendChild(a);
   });
@@ -813,47 +921,41 @@ function openPanel(mov, era) {
     linkList.appendChild(a);
   });
 
-  // Works & Brands — each item opens a related reference/search page
+  // Works & Brands — click item first shows an in-site intro, then provides stable links
   const workList = document.getElementById('panelWorks');
+  const workDetail = document.getElementById('workDetail');
   workList.innerHTML = '';
+  if (workDetail) workDetail.innerHTML = '';
 
-  const makeLinkedItem = (label, kicker, url, isBrand=false) => {
-    const a = document.createElement('a');
-    a.className = isBrand ? 'work-item work-link work-brand' : 'work-item work-link';
-    a.href = url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    if (isBrand) a.style.color = mov.color;
-    a.addEventListener('click', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      openExternal(url);
-    });
-    a.innerHTML = `
+  const makeLinkedItem = (label, kicker, type='work') => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = type === 'brand' ? 'work-item work-link work-brand' : 'work-item work-link';
+    btn.style.textAlign = 'left';
+    btn.style.width = '100%';
+    btn.style.cursor = 'pointer';
+    btn.style.fontFamily = 'inherit';
+    btn.style.color = type === 'brand' ? mov.color : 'var(--text)';
+    btn.innerHTML = `
       <span class="work-kicker">${kicker}</span>
       <span class="work-title">${label}</span>
     `;
-    workList.appendChild(a);
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      renderWorkDetail(label, mov, type);
+    });
+    workList.appendChild(btn);
   };
 
   if (mov.work) {
     mov.work.split(' · ').map(w => w.trim()).filter(Boolean).forEach(w => {
-      makeLinkedItem(
-        w,
-        '대표 작품 · 관련 이미지/자료',
-        `https://artsandculture.google.com/search?q=${encodeURIComponent(w + ' ' + mov.name)}`
-      );
+      makeLinkedItem(w, '대표 작품 · 누르면 소개 열림', 'work');
     });
   }
 
   if (mov.brand) {
     mov.brand.split(' · ').map(b => b.trim()).filter(Boolean).forEach(b => {
-      makeLinkedItem(
-        b,
-        '대표 브랜드 · 관련 자료',
-        `https://www.google.com/search?q=${encodeURIComponent(b + ' design history ' + mov.name)}`,
-        true
-      );
+      makeLinkedItem(b, '대표 브랜드 · 누르면 소개 열림', 'brand');
     });
   }
 
