@@ -148,8 +148,36 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
   display:block;
 }
 .img-item:hover{border-color:var(--border2);transform:scale(1.02);}
-.img-item img{width:100%;height:110px;object-fit:cover;display:block;}
-.img-item-label{font-size:9px;color:var(--muted);padding:6px 8px;line-height:1.4;}
+.img-preview{
+  min-height:118px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:8px;
+  padding:14px 12px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05), transparent 28%),
+    linear-gradient(135deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));
+}
+.img-preview-kicker{
+  font-size:8px;
+  color:var(--muted);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-family:'DM Mono',monospace;
+}
+.img-preview-title{
+  font-size:12px;
+  color:var(--text);
+  line-height:1.45;
+  word-break:keep-all;
+}
+.img-preview-action{
+  font-size:9px;
+  color:var(--muted);
+  margin-top:2px;
+}
+.img-item-label{font-size:9px;color:var(--muted);padding:6px 8px;line-height:1.4;border-top:1px solid var(--border);}
 .img-notice{font-size:9px;color:var(--muted);margin-top:6px;line-height:1.5;font-style:italic;}
 
 /* LINK BUTTONS */
@@ -178,6 +206,47 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
   padding:8px 12px;border-radius:5px;
   border:1px solid var(--border);background:var(--bg2);
   font-size:10px;color:var(--text);line-height:1.5;
+}
+.work-link{
+  display:block;
+  text-decoration:none;
+  color:var(--text);
+  transition:all .15s;
+  position:relative;
+  padding-right:18px;
+}
+.work-link:hover{
+  border-color:var(--border2);
+  background:var(--bg4);
+  transform:translateX(2px);
+}
+.work-link::after{
+  content:'↗';
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:10px;
+}
+.work-kicker{
+  display:block;
+  font-size:8px;
+  color:var(--muted);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:3px;
+  font-family:'DM Mono',monospace;
+}
+.work-title{
+  display:block;
+  font-size:10px;
+  color:var(--text);
+  line-height:1.45;
+  word-break:keep-all;
+}
+.work-brand .work-title{
+  color:inherit;
 }
 
 /* SCROLLBAR */
@@ -227,20 +296,20 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
     <!-- 대표 이미지 -->
     <div class="ps">
-      <div class="ps-title"><span class="ps-title-icon">🖼</span> 대표 이미지 — 클릭하면 구글 아트 & 컬처로 이동</div>
+      <div class="ps-title"><span class="ps-title-icon">🖼</span> 대표 이미지 자료 — 클릭하면 관련 사이트로 이동</div>
       <div class="img-grid" id="panelImgs"></div>
-      <div class="img-notice">* 이미지를 클릭하면 구글 아트 & 컬처에서 고화질로 감상할 수 있어요.</div>
+      <div class="img-notice">* 외부 이미지 API가 차단되어도 깨지지 않도록, 대표 이미지는 검색 프리뷰 카드로 표시돼요. 클릭하면 Google Arts & Culture 자료로 이동합니다.</div>
     </div>
 
     <!-- 외부 링크 -->
     <div class="ps">
-      <div class="ps-title"><span class="ps-title-icon">🔗</span> 더 알아보기</div>
+      <div class="ps-title"><span class="ps-title-icon">🔗</span> 더 알아보기 — 클릭하면 새 탭으로 이동</div>
       <div class="link-list" id="panelLinks"></div>
     </div>
 
     <!-- 대표 작품 목록 -->
     <div class="ps">
-      <div class="ps-title"><span class="ps-title-icon">📋</span> 대표 작품 · 브랜드</div>
+      <div class="ps-title"><span class="ps-title-icon">📋</span> 대표 작품 · 브랜드 — 클릭하면 관련 자료로 이동</div>
       <div class="work-list" id="panelWorks"></div>
     </div>
 
@@ -649,6 +718,13 @@ ERAS.forEach(era => {
   grid.appendChild(section);
 });
 
+function openExternal(url) {
+  const opened = window.open(url, '_blank', 'noopener,noreferrer');
+  if (!opened) {
+    window.location.href = url;
+  }
+}
+
 // ── PANEL ──────────────────────────────────────────────
 let activeCard = null;
 
@@ -681,14 +757,24 @@ function openPanel(mov, era) {
   const imgGrid = document.getElementById('panelImgs');
   imgGrid.innerHTML = '';
   (mov.imgs || []).forEach(img => {
+    const url = `https://artsandculture.google.com/search?q=${encodeURIComponent(img.q || img.label)}`;
     const a = document.createElement('a');
     a.className = 'img-item';
-    a.href = `https://artsandculture.google.com/search?q=${encodeURIComponent(img.q)}`;
+    a.href = url;
     a.target = '_blank';
-    a.rel = 'noopener';
+    a.rel = 'noopener noreferrer';
+    a.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      openExternal(url);
+    });
     a.innerHTML = `
-      <img src="https://source.unsplash.com/400x220/?${encodeURIComponent(img.q)}" alt="${img.label}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x220/1a1a1e/5e5c57?text=${encodeURIComponent(img.label)}'">
-      <div class="img-item-label">${img.label} · 구글 아트로 이동 ↗</div>
+      <div class="img-preview" style="border-left:3px solid ${mov.color}">
+        <div class="img-preview-kicker">대표 이미지 검색</div>
+        <div class="img-preview-title">${img.label}</div>
+        <div class="img-preview-action">Google Arts & Culture에서 보기 ↗</div>
+      </div>
+      <div class="img-item-label">${img.label} · 고화질 자료로 이동 ↗</div>
     `;
     imgGrid.appendChild(a);
   });
@@ -710,7 +796,12 @@ function openPanel(mov, era) {
     a.className = 'link-btn';
     a.href = links[def.key];
     a.target = '_blank';
-    a.rel = 'noopener';
+    a.rel = 'noopener noreferrer';
+    a.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      openExternal(links[def.key]);
+    });
     a.innerHTML = `
       <div class="link-icon" style="background:${def.bg};color:${def.color}">${def.icon}</div>
       <div class="link-info">
@@ -722,22 +813,54 @@ function openPanel(mov, era) {
     linkList.appendChild(a);
   });
 
-  // Works
+  // Works & Brands — each item opens a related reference/search page
   const workList = document.getElementById('panelWorks');
   workList.innerHTML = '';
+
+  const makeLinkedItem = (label, kicker, url, isBrand=false) => {
+    const a = document.createElement('a');
+    a.className = isBrand ? 'work-item work-link work-brand' : 'work-item work-link';
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    if (isBrand) a.style.color = mov.color;
+    a.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      openExternal(url);
+    });
+    a.innerHTML = `
+      <span class="work-kicker">${kicker}</span>
+      <span class="work-title">${label}</span>
+    `;
+    workList.appendChild(a);
+  };
+
   if (mov.work) {
-    mov.work.split(' · ').forEach(w => {
-      const div = document.createElement('div');
-      div.className = 'work-item';
-      div.textContent = w.trim();
-      workList.appendChild(div);
+    mov.work.split(' · ').map(w => w.trim()).filter(Boolean).forEach(w => {
+      makeLinkedItem(
+        w,
+        '대표 작품 · 관련 이미지/자료',
+        `https://artsandculture.google.com/search?q=${encodeURIComponent(w + ' ' + mov.name)}`
+      );
     });
   }
+
   if (mov.brand) {
+    mov.brand.split(' · ').map(b => b.trim()).filter(Boolean).forEach(b => {
+      makeLinkedItem(
+        b,
+        '대표 브랜드 · 관련 자료',
+        `https://www.google.com/search?q=${encodeURIComponent(b + ' design history ' + mov.name)}`,
+        true
+      );
+    });
+  }
+
+  if (!mov.work && !mov.brand) {
     const div = document.createElement('div');
     div.className = 'work-item';
-    div.style.color = mov.color;
-    div.textContent = '브랜드: ' + mov.brand;
+    div.textContent = '대표 작품·브랜드 정보가 아직 없습니다.';
     workList.appendChild(div);
   }
 
