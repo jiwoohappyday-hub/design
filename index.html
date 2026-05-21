@@ -28,7 +28,13 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
 /* CANVAS */
 .canvas{flex:1;overflow:auto;}
-.atlas{display:flex;flex-direction:column;}
+.atlas{display:flex;flex-direction:row;align-items:stretch;min-height:100%;}
+.atlas-left{display:flex;flex-direction:column;flex-shrink:0;border-right:2px solid rgba(255,255,255,0.1);position:relative;}
+.atlas-left::after{content:'';position:absolute;right:-13px;top:50%;transform:translateY(-50%);width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:13px solid rgba(255,255,255,0.13);z-index:5;}
+.atlas-right{display:flex;flex-direction:column;flex-shrink:0;}
+.merge-label{position:sticky;left:0;display:flex;align-items:center;justify-content:center;padding:8px 20px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;background:rgba(11,11,12,0.9);border-bottom:1px solid var(--border);gap:8px;}
+.merge-label::before,.merge-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--border2));}
+.merge-label::after{background:linear-gradient(to left,transparent,var(--border2));}
 
 /* 트랙 레이블 */
 .track{display:flex;flex-direction:column;}
@@ -381,28 +387,46 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 <div class="canvas">
 <div class="atlas" id="atlas">
 
-  <!-- 서양 트랙 -->
-  <div class="track west" id="trackWest">
-    <div class="track-header">
-      <span class="track-label">Track 01</span>
-      <div class="track-divider"></div>
-      <span class="track-title" style="color:#6e9ec8">서양 디자인사</span>
-      <div class="track-divider"></div>
-      <span class="track-desc">선사 ~ 포스트모던 · 기원전 40,000 ~ 1990s</span>
+  <!-- 왼쪽: 서양 + 동양 -->
+  <div class="atlas-left" id="atlasLeft">
+
+    <div class="track west" id="trackWest">
+      <div class="track-header">
+        <span class="track-label">Track 01</span>
+        <div class="track-divider"></div>
+        <span class="track-title" style="color:#6e9ec8">서양 디자인사</span>
+        <div class="track-divider"></div>
+        <span class="track-desc">선사 ~ 포스트모던 · 기원전 40,000 ~ 1990s</span>
+      </div>
+      <div class="grid" id="gridWest"></div>
     </div>
-    <div class="grid" id="gridWest"></div>
+
+    <div class="track east" id="trackEast">
+      <div class="track-header">
+        <span class="track-label">Track 02</span>
+        <div class="track-divider"></div>
+        <span class="track-title" style="color:#c8a96e">동양 디자인사</span>
+        <div class="track-divider"></div>
+        <span class="track-desc">한 · 중 · 일 통합 · 고대 ~ 근대</span>
+      </div>
+      <div class="grid" id="gridEast"></div>
+    </div>
+
   </div>
 
-  <!-- 동양 트랙 -->
-  <div class="track east" id="trackEast">
-    <div class="track-header">
-      <span class="track-label">Track 02</span>
-      <div class="track-divider"></div>
-      <span class="track-title" style="color:#c8a96e">동양 디자인사</span>
-      <div class="track-divider"></div>
-      <span class="track-desc">한 · 중 · 일 통합 · 고대 ~ 근대</span>
+  <!-- 오른쪽: 현대 합류 -->
+  <div class="atlas-right" id="atlasRight">
+    <div class="track modern" id="trackModern">
+      <div class="track-header">
+        <span class="track-label">합류 · Track 03</span>
+        <div class="track-divider"></div>
+        <span class="track-title" style="color:#6ec8a9">현대 · 글로벌 디자인</span>
+        <div class="track-divider"></div>
+        <span class="track-desc">동서양 합류 · 1990s ~ 현재</span>
+      </div>
+      <div class="merge-label">서양 + 동양 → 인터넷으로 합류</div>
+      <div class="grid" id="gridModern"></div>
     </div>
-    <div class="grid" id="gridEast"></div>
   </div>
 
 </div>
@@ -1019,6 +1043,12 @@ if (typeof ERAS_EAST !== 'undefined') {
   ERAS_EAST.forEach(era => gridEast.appendChild(buildEraSection(era)));
 }
 
+// 현대 트랙 빌드
+const gridModern = document.getElementById('gridModern');
+if (typeof ERAS_MODERN !== 'undefined') {
+  ERAS_MODERN.forEach(era => gridModern.appendChild(buildEraSection(era)));
+}
+
 function openExternal(url) {
   const opened = window.open(url, '_blank', 'noopener,noreferrer');
   if (!opened) {
@@ -1247,8 +1277,7 @@ function closePanel() {
   document.querySelectorAll('.mov.active').forEach(c => c.classList.remove('active'));
 }
 </script>
-    <script src="eras_modern.js"></script>
-  <script src="eras_east_asia.js"></script>
   <script src="eras_east.js"></script>
+  <script src="eras_modern.js"></script>
 </body>
 </html>
