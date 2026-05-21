@@ -27,9 +27,39 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 .meta-item span{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);}
 
 /* CANVAS */
-.canvas{flex:1;overflow:auto;display:flex;}
-.grid{display:flex;align-items:flex-start;min-height:100%;padding-top:20px;}
+.canvas{flex:1;overflow:auto;}
+.atlas{display:flex;flex-direction:column;}
+
+/* 트랙 레이블 */
+.track{display:flex;flex-direction:column;}
+.track-header{
+  position:sticky;left:0;z-index:20;
+  display:flex;align-items:center;gap:12px;
+  padding:10px 24px;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border2);
+  background:rgba(11,11,12,0.92);
+  backdrop-filter:blur(12px);
+  flex-shrink:0;
+}
+.track-label{
+  font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  font-family:'DM Mono',monospace;color:var(--muted);
+}
+.track-title{font-size:13px;font-weight:500;}
+.track-desc{font-size:9px;color:var(--muted);}
+.track-divider{
+  width:1px;height:16px;background:var(--border2);flex-shrink:0;
+}
+
+/* 트랙 안의 가로 스크롤 행 */
+.grid{display:flex;align-items:flex-start;min-height:280px;padding-top:16px;padding-bottom:16px;}
 .era-section{flex-shrink:0;display:flex;height:100%;border-right:1px solid var(--border);}
+
+/* 동양 트랙 구분선 */
+.track.east .track-header{
+  border-top:2px solid rgba(200,169,110,0.2);
+}
 
 /* ERA INFO */
 .era-info-col{width:260px;flex-shrink:0;padding:24px;background:rgba(11,11,12,0.4);backdrop-filter:blur(10px);position:sticky;left:0;z-index:10;border-right:1px solid var(--border);display:flex;flex-direction:column;}
@@ -349,7 +379,33 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
 <!-- CANVAS -->
 <div class="canvas">
-<div class="grid" id="grid"></div>
+<div class="atlas" id="atlas">
+
+  <!-- 서양 트랙 -->
+  <div class="track west" id="trackWest">
+    <div class="track-header">
+      <span class="track-label">Track 01</span>
+      <div class="track-divider"></div>
+      <span class="track-title" style="color:#6e9ec8">서양 디자인사</span>
+      <div class="track-divider"></div>
+      <span class="track-desc">선사 ~ 포스트모던 · 기원전 40,000 ~ 1990s</span>
+    </div>
+    <div class="grid" id="gridWest"></div>
+  </div>
+
+  <!-- 동양 트랙 -->
+  <div class="track east" id="trackEast">
+    <div class="track-header">
+      <span class="track-label">Track 02</span>
+      <div class="track-divider"></div>
+      <span class="track-title" style="color:#c8a96e">동양 디자인사</span>
+      <div class="track-divider"></div>
+      <span class="track-desc">한 · 중 · 일 통합 · 고대 ~ 근대</span>
+    </div>
+    <div class="grid" id="gridEast"></div>
+  </div>
+
+</div>
 </div>
 
 <!-- OVERLAY -->
@@ -843,9 +899,7 @@ const ERAS = [
 ];
 
 // ── BUILD DOM ──────────────────────────────────────────
-const grid = document.getElementById('grid');
-
-ERAS.forEach(era => {
+function buildEraSection(era) {
   const section = document.createElement('div');
   section.className = 'era-section';
 
@@ -952,8 +1006,18 @@ ERAS.forEach(era => {
   });
 
   section.appendChild(row);
-  grid.appendChild(section);
-});
+  return section;
+}
+
+// 서양 트랙 빌드
+const gridWest = document.getElementById('gridWest');
+ERAS.forEach(era => gridWest.appendChild(buildEraSection(era)));
+
+// 동양 트랙 빌드
+const gridEast = document.getElementById('gridEast');
+if (typeof ERAS_EAST !== 'undefined') {
+  ERAS_EAST.forEach(era => gridEast.appendChild(buildEraSection(era)));
+}
 
 function openExternal(url) {
   const opened = window.open(url, '_blank', 'noopener,noreferrer');
@@ -1185,5 +1249,6 @@ function closePanel() {
 </script>
     <script src="eras_modern.js"></script>
   <script src="eras_east_asia.js"></script>
+  <script src="eras_east.js"></script>
 </body>
 </html>
