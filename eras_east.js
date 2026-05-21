@@ -104,7 +104,7 @@ const ERAS_EAST = [
           {label:"사신도 청룡",q:"goguryeo four guardians blue dragon mural"}
         ],
         trends:[
-          {name:"역동적 인물 표현",techs:["선묘(線描)","천연안료","회반죽 프레스코"]},
+          {name:"역동적 인물 표현",techs:["선묘(線描)","천연안료","석벽 직포 및 회반죽 기법"]},
           {name:"방위 수호신 시각화",techs:["사신도 도상","오방색 체계"]},
         ]
       },
@@ -176,7 +176,7 @@ const ERAS_EAST = [
           {label:"정창원 보물",q:"shosoin treasure nara period"}
         ],
         trends:[
-          {name:"불교 거대 조형",techs:["건칠(乾漆) 기법","금동 주조","목조 건축"]},
+          {name:"불교 거대 조형",techs:["대형 청동 주조","기목조(寄木造) 목조각","금동 주조"]},
           {name:"당나라 양식 수용",techs:["대당풍(大唐風) 문양","정창원 공예"]},
         ]
       },
@@ -196,7 +196,7 @@ const ERAS_EAST = [
           {label:"야마토에 귀족 그림",q:"yamato-e heian court painting"}
         ],
         trends:[
-          {name:"우아한 귀족 취향(모노노아와레)",techs:["야마토에","히라가나 서예","十二단장 배색"]},
+          {name:"우아한 귀족 취향(모노노아와레)",techs:["야마토에","히라가나 서예","주니히토에(十二単) 배색"]},
           {name:"계절 자연 표현",techs:["금박(金泥)","색채 그라데이션(引目鉤鼻)"]},
         ]
       },
@@ -297,7 +297,7 @@ const ERAS_EAST = [
         },
         imgs:[
           {label:"조선 달항아리",q:"joseon moon jar white porcelain"},
-          {label:"청화백자",q:"joseon blue white porcelain celadon"}
+          {label:"청화백자",q:"joseon blue and white porcelain"}
         ],
         trends:[
           {name:"절제의 미(節制美)",techs:["백토 유약","무문(無紋) 여백","대칭 성형"]},
