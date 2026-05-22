@@ -347,6 +347,89 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
+/* ── 현대 파트 추가 UI ── */
+
+/* 기간 배지 */
+.period-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;border-radius:4px;
+  border:1px solid var(--border2);
+  background:var(--bg2);
+  font-size:9px;font-family:'DM Mono',monospace;
+  color:var(--muted);margin-bottom:10px;
+}
+.period-badge-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+
+/* why 박스 */
+.why-box{
+  padding:10px 14px;border-radius:6px;
+  border-left:3px solid;
+  background:var(--bg2);
+  font-size:10px;color:var(--muted);
+  line-height:1.7;margin-bottom:16px;
+}
+.why-box-label{
+  font-size:8px;letter-spacing:.12em;text-transform:uppercase;
+  font-family:'DM Mono',monospace;
+  margin-bottom:5px;color:var(--muted);
+  display:flex;align-items:center;gap:5px;
+}
+
+/* 지역별 탭 */
+.region-tabs{
+  display:flex;gap:4px;flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.region-tab{
+  padding:4px 10px;border-radius:4px;
+  border:1px solid var(--border);background:var(--bg2);
+  font-size:9px;color:var(--muted);cursor:pointer;
+  transition:all .15s;
+}
+.region-tab:hover{border-color:var(--border2);color:var(--text);}
+.region-tab.active{
+  background:var(--bg4);color:var(--text);
+  border-color:var(--border2);
+}
+
+/* 지역 콘텐츠 */
+.region-content{display:none;}
+.region-content.active{display:block;}
+
+.region-trend-item{
+  padding:10px 12px;border-radius:6px;
+  border:1px solid var(--border);background:var(--bg2);
+  margin-bottom:8px;
+}
+.region-trend-header{
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:8px;
+  margin-bottom:4px;
+}
+.region-trend-name{font-size:11px;font-weight:500;color:var(--text);}
+.region-trend-period{
+  font-size:8px;font-family:'DM Mono',monospace;
+  color:var(--muted);white-space:nowrap;flex-shrink:0;
+}
+.region-trend-why{
+  font-size:9px;color:var(--muted);line-height:1.6;
+  margin-bottom:6px;
+}
+.region-trend-techs{
+  display:flex;flex-wrap:wrap;gap:4px;
+}
+.region-trend-tech{
+  padding:2px 7px;border-radius:3px;
+  border:1px solid var(--border);
+  font-size:8px;color:var(--muted);
+  background:var(--bg3);
+}
+.region-trend-brand{
+  font-size:9px;margin-top:5px;
+  padding-top:5px;border-top:1px solid var(--border);
+  color:var(--muted);
+}
+
 /* 현대 참고 브랜드 */
 .modern-ref-item{
   display:flex;align-items:flex-start;gap:10px;
@@ -471,6 +554,20 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
     <div class="ps" id="modernRefsSection" style="display:none">
       <div class="ps-title"><span class="ps-title-icon">🔮</span> 현대에서 이 사조를 참고한 브랜드 · 작품</div>
       <div class="work-list" id="panelModernRefs"></div>
+    </div>
+
+    <!-- 현대 전용: 기간 + Why -->
+    <div class="ps" id="modernPeriodSection" style="display:none">
+      <div class="ps-title"><span class="ps-title-icon">📅</span> 트렌드 발생 배경 · 기간</div>
+      <div id="panelPeriodBadge"></div>
+      <div id="panelWhyBox"></div>
+    </div>
+
+    <!-- 현대 전용: 지역별 트렌드 -->
+    <div class="ps" id="modernRegionSection" style="display:none">
+      <div class="ps-title"><span class="ps-title-icon">🌏</span> 지역별 트렌드</div>
+      <div class="region-tabs" id="regionTabs"></div>
+      <div id="regionContents"></div>
     </div>
 
   </div>
@@ -1264,6 +1361,97 @@ function openPanel(mov, era) {
     });
   } else {
     modernSection.style.display = 'none';
+  }
+
+  // ── 현대 전용: 기간·why·지역별 트렌드 렌더링 ──
+  const periodSection  = document.getElementById('modernPeriodSection');
+  const regionSection  = document.getElementById('modernRegionSection');
+  const periodBadge    = document.getElementById('panelPeriodBadge');
+  const whyBox         = document.getElementById('panelWhyBox');
+  const regionTabs     = document.getElementById('regionTabs');
+  const regionContents = document.getElementById('regionContents');
+
+  // 현대 사조인지 판단 (period 또는 why 필드 있으면)
+  if (mov.period || mov.why || mov.regions) {
+
+    // 기간 + Why
+    if (mov.period || mov.why) {
+      periodSection.style.display = 'block';
+      periodBadge.innerHTML = mov.period
+        ? `<div class="period-badge"><span class="period-badge-dot" style="background:${mov.color}"></span>${mov.period}</div>`
+        : '';
+      whyBox.innerHTML = mov.why
+        ? `<div class="why-box" style="border-color:${mov.color}44">
+             <div class="why-box-label">⚡ 왜 이 트렌드가 나왔나</div>
+             ${mov.why}
+           </div>`
+        : '';
+    } else {
+      periodSection.style.display = 'none';
+    }
+
+    // 지역별 탭
+    if (mov.regions && Object.keys(mov.regions).length > 0) {
+      regionSection.style.display = 'block';
+      regionTabs.innerHTML = '';
+      regionContents.innerHTML = '';
+
+      const regionMeta = {
+        global: { flag:'🌐', label:'글로벌' },
+        korea:  { flag:'🇰🇷', label:'한국' },
+        japan:  { flag:'🇯🇵', label:'일본' },
+        china:  { flag:'🇨🇳', label:'중국' },
+        europe: { flag:'🇪🇺', label:'유럽' },
+        west:   { flag:'🇺🇸', label:'미국·서양' },
+      };
+
+      let firstTab = true;
+      Object.entries(mov.regions).forEach(([key, trends]) => {
+        const meta = regionMeta[key] || { flag:'🌍', label:key };
+
+        // 탭 버튼
+        const tab = document.createElement('button');
+        tab.className = 'region-tab' + (firstTab ? ' active' : '');
+        tab.textContent = meta.flag + ' ' + meta.label;
+        tab.dataset.region = key;
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.region-tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.region-content').forEach(c => c.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById('rc-' + key).classList.add('active');
+        });
+        regionTabs.appendChild(tab);
+
+        // 탭 콘텐츠
+        const content = document.createElement('div');
+        content.className = 'region-content' + (firstTab ? ' active' : '');
+        content.id = 'rc-' + key;
+
+        trends.forEach(t => {
+          const item = document.createElement('div');
+          item.className = 'region-trend-item';
+          item.innerHTML = `
+            <div class="region-trend-header">
+              <div class="region-trend-name" style="color:${mov.color}">${t.name}</div>
+              ${t.period ? `<div class="region-trend-period">📅 ${t.period}</div>` : ''}
+            </div>
+            ${t.why ? `<div class="region-trend-why">⚡ ${t.why}</div>` : ''}
+            ${t.techs && t.techs.length ? `<div class="region-trend-techs">${t.techs.map(tc=>`<span class="region-trend-tech">${tc}</span>`).join('')}</div>` : ''}
+            ${t.brand ? `<div class="region-trend-brand">🏷 ${t.brand}</div>` : ''}
+          `;
+          content.appendChild(item);
+        });
+
+        regionContents.appendChild(content);
+        firstTab = false;
+      });
+    } else {
+      regionSection.style.display = 'none';
+    }
+
+  } else {
+    periodSection.style.display = 'none';
+    regionSection.style.display = 'none';
   }
 
   // Open
